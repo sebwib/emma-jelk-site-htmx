@@ -1,0 +1,12 @@
+package reusable
+
+templ SuspenseImg(src, alt, clss, imgClss string) {
+	<div class={ "bg-gray-200 animate-pulse " + clss }>
+		<img
+			src={ src }
+			alt={ alt }
+			class={ "object-cover opacity-0 transition-opacity duration-300 " + imgClss }
+			onload="this.style.opacity='1'; this.parentElement.classList.remove('animate-pulse', 'bg-gray-200')"
+		/>
+	</div>
+}

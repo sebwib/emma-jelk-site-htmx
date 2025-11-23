@@ -1,0 +1,129 @@
+package partial
+
+import "github.com/sebwib/emma-site-htmx/components/reusable"
+import "github.com/sebwib/emma-site-htmx/components/id"
+
+templ Header(routes []Route, currentPath string) {
+	<header class="sticky top-0 z-50">
+		<nav class="px-8 py-8 w-full">
+			<div class="flex items-center justify-between">
+				<div class="flex items-center gap-2">
+					<a
+						hx-get="/"
+						hx-target={ id.Selector(id.ContentID) }
+						hx-push-url="true"
+						href="/"
+					>
+						<h1 class={ headerTextColor(currentPath), "transition-all duration-200 ease-out text-2xl" }>Emma Jelk</h1>
+					</a>
+				</div>
+				<div id={ id.HeaderNavID }>
+					<div class="hidden sm:flex gap-4">
+						for _, route := range routes {
+							<a
+								class={ templ.KV(textColor(currentPath), route.Path != currentPath), templ.KV(selectedTextColor(currentPath), route.Path == currentPath ), "hover:text-gray-400 font-medium" }
+								hx-get={ route.Path }
+								hx-target={ id.Selector(id.ContentID) }
+								hx-push-url="true"
+								href={ route.Path }
+							>
+								{ route.Name }
+							</a>
+						}
+						<a class="text-2xl" target="_blank" href="https://www.instagram.com/emmajelkart/">
+							@reusable.Instagram(svgColor(currentPath))
+						</a>
+					</div>
+					<div class="flex sm:hidden">
+						<button>
+							@reusable.Hamburger(svgColor(currentPath))
+						</button>
+						<div id={ id.HeaderNavMenuID } class="fixed hidden top-0 left-0 w-full h-full bg-black bg-opacity-90 flex flex-col items-center justify-center gap-8 text-white text-2xl animate-fadeIn">
+							for _, route := range routes {
+								<a
+									class="hover:text-gray-400"
+									hx-get={ route.Path }
+									hx-target={ id.Selector(id.ContentID) }
+									hx-push-url="true"
+									href={ route.Path }
+								>
+									{ route.Name }
+								</a>
+							}
+							<a class="text-4xl" target="_blank" href="https://www.instagram.com/emmajelkart/">
+								@reusable.Instagram("white")
+							</a>
+						</div>
+						<script>
+							(function() {
+								const button = document.querySelector("header button");
+								const menu = 	document.getElementById({{ id.HeaderNavMenuID }});
+								menu.addEventListener("click", function() {
+									menu.classList.add("hidden");
+								});
+
+								button.addEventListener("click", function(e) {
+									e.stopPropagation();
+									
+									if (menu.classList.contains("hidden")) {
+										menu.classList.remove("hidden");
+									} else {
+										menu.classList.add("hidden");
+									}
+								});
+							})();
+						</script>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<script>
+			(function() {
+				const nav = document.getElementById({{ id.HeaderNavID }});
+				if (nav) {
+					const setOpacityFromScroll = (scrollY) => {
+						const maxScroll = 300;
+						const opacity = Math.min(scrollY / maxScroll, 1);
+						nav.style.opacity = 1 - opacity;
+					};
+
+					let lastScrollY = window.scrollY;
+					window.addEventListener('scroll', () => {
+						setOpacityFromScroll(window.scrollY)
+					});
+
+					// Initialize on page load
+					setOpacityFromScroll(lastScrollY);
+				}
+			})();		
+		</script>
+	</header>
+}
+
+func headerTextColor(path string) string {
+	if path == "/" {
+		return "text-white"
+	}
+	return "text-black"
+}
+
+func textColor(path string) string {
+	if path == "/" {
+		return "text-white"
+	}
+	return "text-gray-500"
+}
+
+func selectedTextColor(path string) string {
+	if path == "/" {
+		return "text-gray-400"
+	}
+	return "text-gray-800"
+}
+
+func svgColor(path string) string {
+	if path == "/" {
+		return "white"
+	}
+	return "black"
+}

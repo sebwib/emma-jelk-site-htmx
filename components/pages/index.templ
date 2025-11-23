@@ -1,0 +1,34 @@
+package pages
+
+import (
+	"github.com/sebwib/emma-site-htmx/components/id"
+	"github.com/sebwib/emma-site-htmx/components/partial"
+	"github.com/sebwib/emma-site-htmx/components/reusable"
+)
+
+templ Index(routes []partial.Route) {
+	{{ gradient := "linear-gradient(0deg,#00240b00,#000 0%,#0000 41%,#0000)" }}
+	<div class="flex-1 flex flex-col justify-end" style={ "background:" + gradient }>
+		<div class="text-white p-10">
+			<div class="mb-8">
+				for _, route := range routes {
+					if route.InSidebar {
+						<a
+							class="block text-2xl mb-5 hover:text-gray-400"
+							href={ route.Path }
+							hx-get={ route.Path }
+							hx-target={ id.Selector(id.ContentID) }
+							hx-push-url="true"
+							href={ route.Path }
+						>
+							{ route.Name }
+						</a>
+					}
+				}
+			</div>
+			<a class="text-4xl" href="https://www.instagram.com/emmajelkart/" target="_blank">
+				@reusable.Instagram("white")
+			</a>
+		</div>
+	</div>
+}

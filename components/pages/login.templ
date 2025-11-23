@@ -1,0 +1,85 @@
+package pages
+
+templ Login() {
+	<div class="min-h-screen flex items-center justify-center">
+		<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+			<h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+			<form hx-post="/login" hx-target="#login-form" hx-swap="outerHTML">
+				<div id="login-form">
+					<div class="mb-4">
+						<label for="username" class="block text-gray-700 text-sm font-bold mb-2">
+							Username
+						</label>
+						<input
+							type="text"
+							id="username"
+							name="username"
+							required
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						/>
+					</div>
+					<div class="mb-6">
+						<label for="password" class="block text-gray-700 text-sm font-bold mb-2">
+							Password
+						</label>
+						<input
+							type="password"
+							id="password"
+							name="password"
+							required
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						/>
+					</div>
+					<div class="flex items-center justify-between">
+						<button
+							type="submit"
+							class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+						>
+							Sign In
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+}
+
+templ LoginError() {
+	<div id="login-form">
+		<div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+			Invalid username or password
+		</div>
+		<div class="mb-4">
+			<label for="username" class="block text-gray-700 text-sm font-bold mb-2">
+				Username
+			</label>
+			<input
+				type="text"
+				id="username"
+				name="username"
+				required
+				class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+			/>
+		</div>
+		<div class="mb-6">
+			<label for="password" class="block text-gray-700 text-sm font-bold mb-2">
+				Password
+			</label>
+			<input
+				type="password"
+				id="password"
+				name="password"
+				required
+				class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+			/>
+		</div>
+		<div class="flex items-center justify-between">
+			<button
+				type="submit"
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+			>
+				Sign In
+			</button>
+		</div>
+	</div>
+}

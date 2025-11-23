@@ -1,0 +1,604 @@
+
+import mother from "../../resources/mother.jpg";
+
+import teeth from "../../resources/teeth.jpg";
+import teeth_thumb from "../../resources/teeth_thumb.jpg";
+
+import tape from "../../resources/tape.jpg";
+import tape_thumb from "../../resources/tape_thumb.jpg";
+
+import yard1 from "../../resources/yard1.jpg";
+import yard1_thumb from "../../resources/yard1_thumb.jpg";
+
+import hair from "../../resources/hair.jpg";
+import hair_thumb from "../../resources/hair_thumb.jpg";
+
+import hund from "../../resources/100000.jpg";
+
+import born from "../../resources/born.jpg";
+import born_thumb from "../../resources/born_thumb.jpg";
+
+import yard2 from "../../resources/yard2.jpg";
+import yard2_thumb from "../../resources/yard2_thumb.jpg";
+
+import pourguy from "../../resources/pourguy.jpg";
+import pourguy_thumb from "../../resources/pourguy_thumb.jpg";
+
+import hungrig from "../../resources/hungrig.jpg";
+import hungrig_thumb from "../../resources/hungrig_thumb.jpg";
+
+import sjalvportratt from "../../resources/sjalvportratt.jpg";
+import sjalvportratt_thumb from "../../resources/sjalvportratt_thumb.jpg";
+
+import hall_kaften_tommy from "../../resources/hall_kaften_tommy.jpg";
+import hall_kaften_tommy_thumb from "../../resources/hall_kaften_tommy_thumb.jpg";
+
+import grimas2 from "../../resources/grimas2.jpg";
+import grimas2_thumb from "../../resources/grimas2_thumb.jpg";
+
+import things from "../../resources/things.jpg";
+import things_thumb from "../../resources/things_thumb.jpg";
+
+import fluids from "../../resources/fluids.jpg";
+import fluids_thumb from "../../resources/fluids_thumb.jpg";
+
+import floating from "../../resources/floating.jpg";
+import floating_thumb from "../../resources/floating_thumb.jpg";
+
+import pandemicspring from "../../resources/pandemicspring.jpg";
+import pandemicspring_thumb from "../../resources/pandemicspring_thumb.jpg";
+
+import villebrad from "../../resources/villebrad.jpg";
+import villebrad_thumb from "../../resources/villebrad_thumb.jpg";
+
+import hope from "../../resources/hope.jpg";
+import hope_thumb from "../../resources/hope_thumb.jpg";
+
+import dodskalle from "../../resources/dodskalle.jpg";
+import dodskalle_thumb from "../../resources/dodskalle_thumb.jpg";
+
+import mother_n_son from "../../resources/mother_n_son.jpg";
+import mother_n_son_thumb from "../../resources/mother_n_son_thumb.jpg";
+
+import landing from "../../resources/landing.jpg";
+import landing_thumb from "../../resources/landing_thumb.jpg";
+
+import onlynow from "../../resources/onlynow.jpg";
+import onlynow_thumb from "../../resources/onlynow_thumb.jpg";
+
+import interlinked from "../../resources/interlinked.jpg";
+import interlinked_thumb from "../../resources/interlinked_thumb.jpg";
+
+import divided from "../../resources/divided.jpg";
+import divided_thumb from "../../resources/divided_thumb.jpg";
+
+import mejeriet from "../../resources/mejeriet.jpg";
+import mejeriet_thumb from "../../resources/mejeriet_thumb.jpg";
+
+import against_the_dying from "../../resources/against_the_dying.jpg";
+import against_the_dying_thumb from "../../resources/against_the_dying_thumb.jpg";
+
+import a_sky_of_age from "../../resources/a_sky_of_age.jpg";
+import a_sky_of_age_thumb from "../../resources/a_sky_of_age_thumb.jpg";
+
+import ogden from "../../resources/ogden.jpg";
+import ogden_thumb from "../../resources/ogden_thumb.jpg";
+
+import nautilus from "../../resources/nautilus.jpg";
+import nautilus_thumb from "../../resources/nautilus_thumb.jpg";
+
+import sojourner from "../../resources/sojourner.jpg";
+import sojourner_thumb from "../../resources/sojourner_thumb.jpg";
+
+import truth_neverleft from "../../resources/truth_neverleft.jpg";
+import truth_neverleft_thumb from "../../resources/truth_neverleft_thumb.jpg";
+
+import terra_mater from "../../resources/terra_mater.jpg";
+import terra_mater_thumb from "../../resources/terra_mater_thumb.jpg";
+
+import something_hold_on from "../../resources/something_hold_on.jpg";
+import something_hold_on_thumb from "../../resources/something_hold_on_thumb.jpg";
+
+import pontus from "../../resources/pontus.jpg";
+import pontus_thumb from "../../resources/pontus_thumb.jpg";
+
+import mindthegap from "../../resources/mindthegap.jpg";
+import mindthegap_thumb from "../../resources/mindthegap_thumb.jpg";
+
+import nexus from "../../resources/nexus.jpg";
+import nexus_thumb from "../../resources/nexus_thumb.jpg";
+
+import eyeonroad from "../../resources/eyeonroad.jpg";
+import eyeonroad_thumb from "../../resources/eyeonroad_thumb.jpg";
+
+import home from "../../resources/home.jpg";
+import home_thumb from "../../resources/home_thumb.jpg";
+
+import giants from "../../resources/giants.jpg";
+import giants_thumb from "../../resources/giants_thumb.jpg";
+
+import fallout from "../../resources/fallout.jpg";
+import fallout_thumb from "../../resources/fallout_thumb.jpg";
+
+import cold_fire from "../../resources/cold_fire.jpg";
+import cold_fire_thumb from "../../resources/cold_fire_thumb.jpg";
+
+import flays from "../../resources/flays.jpg";
+import flays_thumb from "../../resources/flays_thumb.jpg";
+
+import trump from "../../resources/trump.jpg";
+import trump_thumb from "../../resources/trump_thumb.jpg";
+
+import in_another_light from "../../resources/in_another_light.jpg";
+import in_another_light_thumb from "../../resources/in_another_light.jpg";
+
+import phylgia from "../../resources/phylgia.jpg";
+import phylgia_thumb from "../../resources/phylgia_thumb.jpg";
+
+import sicadas_sang from "../../resources/sicadas_sang.jpg";
+import sicadas_sang_thumb from "../../resources/sicadas_sang_thumb.jpg";
+
+import new_dawn from "../../resources/new_dawn.jpg";
+import new_dawn_thumb from "../../resources/new_dawn_thumb.jpg";
+
+import everyone_sucks from "../../resources/everyone_sucks.jpg";
+import everyone_sucks_thumb from "../../resources/everyone_sucks_thumb.jpg";
+
+import yellow_rubber_boots from "../../resources/yellow_rubber_boots.jpg";
+import yellow_rubber_boots_thumb from "../../resources/yellow_rubber_boots_thumb.jpg";
+
+import breaking_point from "../../resources/breaking_point.jpg";
+import breaking_point_thumb from "../../resources/breaking_point_thumb.jpg";
+
+import sulfur_region from "../../resources/sulfur_region.jpg";
+import sulfur_region_thumb from "../../resources/sulfur_region_thumb.jpg";
+
+import rigor_mortis from "../../resources/rigor_mortis.jpg";
+import rigor_mortis_thumb from "../../resources/rigor_mortis_thumb.jpg";
+
+import mare from "../../resources/mare.jpg";
+import mare_thumb from "../../resources/mare_thumb.jpg";
+
+import totum from "../../resources/totum.jpg";
+import totum_thumb from "../../resources/totum_thumb.jpg";
+
+const i = Object.keys;
+
+interface Info {
+  sold?: boolean;
+  size?: string;
+  name?: string;
+}
+
+const gallery: { [key: string]: any } = {
+  totum: totum,
+  breaking_point: breaking_point,
+  trump: trump,
+  mare: mare,
+
+  new_dawn: new_dawn,
+  in_another_light: in_another_light,
+
+  home: home,
+  sojourner: sojourner,
+  cold_fire: cold_fire,
+
+  rigor_mortis: rigor_mortis,
+  yellow_rubber_boots: yellow_rubber_boots,
+  everyone_sucks: everyone_sucks,
+  phylgia: phylgia,
+  sicadas_sang: sicadas_sang,
+
+  mindthegap: mindthegap,
+  sulfur_region: sulfur_region,
+  flays: flays,
+  terra_mater: terra_mater,
+  giants: giants,
+  fallout: fallout,
+  nexus: nexus,
+  truth_neverleft: truth_neverleft,
+  nautilus: nautilus,
+  pontus: pontus,
+  against_the_dying: against_the_dying,
+  eyeonroad: eyeonroad,
+  a_sky_of_age: a_sky_of_age,
+  something_hold_on: something_hold_on,
+  ogden: ogden,
+
+  divided: divided,
+  mejeriet: mejeriet,
+  interlinked: interlinked,
+  onlynow: onlynow,
+  landing: landing,
+  mother_n_son: mother_n_son,
+  hope: hope,
+  born: born,
+  floating: floating,
+  hall_kaften_tommy: hall_kaften_tommy,
+  things: things,
+  dodskalle: dodskalle,
+  villebrad: villebrad,
+  mother: mother,
+  pandemicspring: pandemicspring,
+  hungrig: hungrig,
+  pourguy: pourguy,
+  fluids: fluids,
+  sjalvportratt: sjalvportratt,
+  yard1: yard1,
+  hair: hair,
+  grimas2: grimas2,
+  tape: tape,
+  teeth: teeth,
+  yard2: yard2,
+  hund: hund,
+  //agren:agren,
+};
+
+const galleryThumbs: { [key: string]: any } = {
+  totum: totum_thumb,
+  mare: mare_thumb,
+  rigor_mortis: rigor_mortis_thumb,
+  sulfur_region: sulfur_region_thumb,
+  breaking_point: breaking_point_thumb,
+  yellow_rubber_boots: yellow_rubber_boots_thumb,
+  everyone_sucks: everyone_sucks_thumb,
+  new_dawn: new_dawn_thumb,
+  sicadas_sang: sicadas_sang_thumb,
+  in_another_light: in_another_light_thumb,
+  trump: trump_thumb,
+  phylgia: phylgia_thumb,
+
+  fallout: fallout_thumb,
+  home: home_thumb,
+  flays: flays_thumb,
+  sojourner: sojourner_thumb,
+  cold_fire: cold_fire_thumb,
+  giants: giants_thumb,
+  against_the_dying: against_the_dying_thumb,
+  truth_neverleft: truth_neverleft_thumb,
+  terra_mater: terra_mater_thumb,
+  nautilus: nautilus_thumb,
+  mindthegap: mindthegap_thumb,
+  nexus: nexus_thumb,
+  pontus: pontus_thumb,
+  a_sky_of_age: a_sky_of_age_thumb,
+  eyeonroad: eyeonroad_thumb,
+  something_hold_on: something_hold_on_thumb,
+  ogden: ogden_thumb,
+
+  divided: divided_thumb,
+  mejeriet: mejeriet_thumb,
+  interlinked: interlinked_thumb,
+  onlynow: onlynow_thumb,
+  landing: landing_thumb,
+  mother_n_son: mother_n_son_thumb,
+  hope: hope_thumb,
+  dodskalle: dodskalle_thumb,
+  villebrad: villebrad_thumb,
+  pandemicspring: pandemicspring_thumb,
+  floating: floating_thumb,
+  fluids: fluids_thumb,
+  hall_kaften_tommy: hall_kaften_tommy_thumb,
+  grimas2: grimas2_thumb,
+  hair: hair_thumb,
+  pourguy: pourguy_thumb,
+  hungrig: hungrig_thumb,
+  sjalvportratt: sjalvportratt_thumb,
+  born: born_thumb,
+  tape: tape_thumb,
+  yard2: yard2_thumb,
+  teeth: teeth_thumb,
+  yard1: yard1_thumb,
+  things: things_thumb,
+};
+
+const info: { [key: string]: Info } = {
+  totum: {
+    sold: false,
+    size: "92x119",
+    name: "Totum",
+  },
+  mare: {
+    sold: false,
+    size: "66x88",
+    name: "Mare",
+  },
+  rigor_mortis: {
+    sold: false,
+    size: "80x80",
+    name: "Rigor mortis",
+  },
+  sulfur_region: {
+    sold: false,
+    size: "70x50",
+    name: "Sulfur region",
+  },
+  breaking_point: {
+    sold: false,
+    size: "70x70",
+    name: "Breaking point",
+  },
+  yellow_rubber_boots: {
+    sold: false,
+    size: "61x50",
+    name: "Yellow rubber boots",
+  },
+  everyone_sucks: {
+    sold: false,
+    size: "70x100",
+    name: "Everyone sucks",
+  },
+  new_dawn: {
+    sold: false,
+    size: "100x70",
+    name: "New dawn",
+  },
+  sicadas_sang: {
+    sold: false,
+    size: "50x70",
+    name: "And the cicadas sang",
+  },
+  phylgia: {
+    sold: false,
+    size: "50x70",
+    name: "Fylgia",
+  },
+  in_another_light: {
+    sold: false,
+    size: "100x70",
+    name: "In another light",
+  },
+
+  flays: {
+    sold: false,
+    size: "93x68",
+    name: "And she flays",
+  },
+  cold_fire: {
+    sold: false,
+    size: "99x69",
+    name: "Cold fire",
+  },
+  fallout: {
+    sold: true,
+    size: "74x57",
+    name: "Fallout",
+  },
+  home: {
+    size: "50x61",
+    name: "H.O.M.E",
+  },
+  giants: {
+    sold: false,
+    size: "116x89",
+    name: "Giants",
+  },
+  sojourner: {
+    sold: true,
+    size: "65x54",
+    name: "The sojourner",
+  },
+  eyeonroad: {
+    sold: false,
+    size: "61x50",
+    name: "I'll keep an eye on the road",
+  },
+  mindthegap: {
+    sold: false,
+    size: "120x85",
+    name: "Please mind the gap",
+  },
+  nexus: {
+    sold: false,
+    size: "70x100",
+    name: "Nexus",
+  },
+  pontus: {
+    sold: false,
+    size: "61x50",
+    name: "Pontus",
+  },
+  something_hold_on: {
+    sold: false,
+    size: "100x80",
+    name: "Something to hold on to",
+  },
+  terra_mater: {
+    sold: false,
+    size: "93x68",
+    name: "Terra Mater",
+  },
+  truth_neverleft: {
+    sold: true,
+    size: "62x43",
+    name: "The truth is, I never really left",
+  },
+  nautilus: {
+    sold: false,
+    size: "89x116",
+    name: "Nautilus",
+  },
+  against_the_dying: {
+    sold: false,
+    size: "104x121",
+    name: "Against the dying of the light",
+  },
+  ogden: {
+    sold: false,
+    size: "70x49",
+    name: "Whenever we entered the field, Mr Ogden would come out screaming at us",
+  },
+  a_sky_of_age: {
+    sold: false,
+    size: "120x85",
+    name: "A sky of age",
+  },
+  mejeriet: {
+    sold: false,
+    size: "50x70",
+    name: "Mejeriet",
+  },
+  divided: {
+    sold: true,
+    size: "80x80",
+    name: "Divided",
+  },
+  landing: {
+    sold: true,
+    size: "117x69",
+    name: "The landing area is a total mess",
+  },
+  interlinked: {
+    sold: true,
+    size: "60x50",
+    name: "Interlinked",
+  },
+  onlynow: {
+    sold: false,
+    size: "70x50",
+    name: "There is only now",
+  },
+  hope: {
+    sold: false,
+    size: "90x106",
+    name: "Hope dies last",
+  },
+  villebrad: {
+    sold: false,
+    name: "Villebråd 2021",
+  },
+  pandemicspring: {
+    sold: false,
+    name: "Pandemic spring",
+    size: "100x100",
+  },
+  mother_n_son: {
+    sold: false,
+    name: "The mother and the son",
+    size: "90x110",
+  },
+  hall_kaften_tommy: {
+    sold: true,
+    name: "Håll käften, Tommy",
+    size: "100x70",
+  },
+  floating: {
+    sold: false,
+    name: "Floating on the surface of a planet",
+    size: "98x70",
+  },
+  fluids: {
+    sold: false,
+    name: "Amniotic Fluids Spa & Resort",
+    size: "95x95",
+  },
+  pourguy: {
+    sold: false,
+    name: "Pour guy",
+    size: "90x100",
+  },
+  born: {
+    sold: true,
+    name: "Rebirth",
+    size: "70x100",
+  },
+  hund: {
+    sold: true,
+    name: "100 000",
+    size: "70x70",
+  },
+  br_2: {
+    sold: true,
+    name: "BR 2",
+    size: "100x50",
+  },
+  br_desert_small4: {
+    sold: true,
+    name: "BR 1",
+    size: "100x50",
+  },
+  mother: {
+    sold: true,
+    name: "Mother",
+    size: "70x70",
+  },
+  grimas2: {
+    sold: true,
+    name: "Grimas 2",
+    size: "70x70",
+  },
+  hungrig: {
+    sold: false,
+    name: "Hungrig",
+  },
+  yard2: {
+    sold: true,
+  },
+  teeth: {
+    sold: true,
+    name: "Donut hole",
+    size: "70x70",
+  },
+  things: {
+    sold: false,
+    name: "The things we leave behind",
+    size: "120x95",
+  },
+  trump: {
+    sold: false,
+    name: "The anatomy of a plastic white house",
+    size: "1x1",
+  },
+};
+
+// Go database inserts
+db.AddArt(db.Art{ImgURL: "totum.jpg", ThumbURL: "totum_thumb.jpg", Title: "Totum", Medium: "", Width: 92, Height: 119, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "mare.jpg", ThumbURL: "mare_thumb.jpg", Title: "Mare", Medium: "", Width: 66, Height: 88, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "rigor_mortis.jpg", ThumbURL: "rigor_mortis_thumb.jpg", Title: "Rigor mortis", Medium: "", Width: 80, Height: 80, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "sulfur_region.jpg", ThumbURL: "sulfur_region_thumb.jpg", Title: "Sulfur region", Medium: "", Width: 70, Height: 50, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "breaking_point.jpg", ThumbURL: "breaking_point_thumb.jpg", Title: "Breaking point", Medium: "", Width: 70, Height: 70, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "yellow_rubber_boots.jpg", ThumbURL: "yellow_rubber_boots_thumb.jpg", Title: "Yellow rubber boots", Medium: "", Width: 61, Height: 50, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "everyone_sucks.jpg", ThumbURL: "everyone_sucks_thumb.jpg", Title: "Everyone sucks", Medium: "", Width: 70, Height: 100, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "new_dawn.jpg", ThumbURL: "new_dawn_thumb.jpg", Title: "New dawn", Medium: "", Width: 100, Height: 70, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "sicadas_sang.jpg", ThumbURL: "sicadas_sang_thumb.jpg", Title: "And the cicadas sang", Medium: "", Width: 50, Height: 70, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "phylgia.jpg", ThumbURL: "phylgia_thumb.jpg", Title: "Fylgia", Medium: "", Width: 50, Height: 70, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "in_another_light.jpg", ThumbURL: "in_another_light.jpg", Title: "In another light", Medium: "", Width: 100, Height: 70, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "flays.jpg", ThumbURL: "flays_thumb.jpg", Title: "And she flays", Medium: "", Width: 93, Height: 68, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "cold_fire.jpg", ThumbURL: "cold_fire_thumb.jpg", Title: "Cold fire", Medium: "", Width: 99, Height: 69, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "fallout.jpg", ThumbURL: "fallout_thumb.jpg", Title: "Fallout", Medium: "", Width: 74, Height: 57, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "home.jpg", ThumbURL: "home_thumb.jpg", Title: "H.O.M.E", Medium: "", Width: 50, Height: 61, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "giants.jpg", ThumbURL: "giants_thumb.jpg", Title: "Giants", Medium: "", Width: 116, Height: 89, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "sojourner.jpg", ThumbURL: "sojourner_thumb.jpg", Title: "The sojourner", Medium: "", Width: 65, Height: 54, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "eyeonroad.jpg", ThumbURL: "eyeonroad_thumb.jpg", Title: "I'll keep an eye on the road", Medium: "", Width: 61, Height: 50, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "mindthegap.jpg", ThumbURL: "mindthegap_thumb.jpg", Title: "Please mind the gap", Medium: "", Width: 120, Height: 85, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "nexus.jpg", ThumbURL: "nexus_thumb.jpg", Title: "Nexus", Medium: "", Width: 70, Height: 100, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "pontus.jpg", ThumbURL: "pontus_thumb.jpg", Title: "Pontus", Medium: "", Width: 61, Height: 50, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "something_hold_on.jpg", ThumbURL: "something_hold_on_thumb.jpg", Title: "Something to hold on to", Medium: "", Width: 100, Height: 80, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "terra_mater.jpg", ThumbURL: "terra_mater_thumb.jpg", Title: "Terra Mater", Medium: "", Width: 93, Height: 68, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "truth_neverleft.jpg", ThumbURL: "truth_neverleft_thumb.jpg", Title: "The truth is, I never really left", Medium: "", Width: 62, Height: 43, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "nautilus.jpg", ThumbURL: "nautilus_thumb.jpg", Title: "Nautilus", Medium: "", Width: 89, Height: 116, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "against_the_dying.jpg", ThumbURL: "against_the_dying_thumb.jpg", Title: "Against the dying of the light", Medium: "", Width: 104, Height: 121, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "ogden.jpg", ThumbURL: "ogden_thumb.jpg", Title: "Whenever we entered the field, Mr Ogden would come out screaming at us", Medium: "", Width: 70, Height: 49, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "a_sky_of_age.jpg", ThumbURL: "a_sky_of_age_thumb.jpg", Title: "A sky of age", Medium: "", Width: 120, Height: 85, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "mejeriet.jpg", ThumbURL: "mejeriet_thumb.jpg", Title: "Mejeriet", Medium: "", Width: 50, Height: 70, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "divided.jpg", ThumbURL: "divided_thumb.jpg", Title: "Divided", Medium: "", Width: 80, Height: 80, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "landing.jpg", ThumbURL: "landing_thumb.jpg", Title: "The landing area is a total mess", Medium: "", Width: 117, Height: 69, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "interlinked.jpg", ThumbURL: "interlinked_thumb.jpg", Title: "Interlinked", Medium: "", Width: 60, Height: 50, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "onlynow.jpg", ThumbURL: "onlynow_thumb.jpg", Title: "There is only now", Medium: "", Width: 70, Height: 50, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "hope.jpg", ThumbURL: "hope_thumb.jpg", Title: "Hope dies last", Medium: "", Width: 90, Height: 106, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "villebrad.jpg", ThumbURL: "villebrad_thumb.jpg", Title: "Villebråd 2021", Medium: "", Width: 0, Height: 0, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "pandemicspring.jpg", ThumbURL: "pandemicspring_thumb.jpg", Title: "Pandemic spring", Medium: "", Width: 100, Height: 100, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "mother_n_son.jpg", ThumbURL: "mother_n_son_thumb.jpg", Title: "The mother and the son", Medium: "", Width: 90, Height: 110, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "hall_kaften_tommy.jpg", ThumbURL: "hall_kaften_tommy_thumb.jpg", Title: "Håll käften, Tommy", Medium: "", Width: 100, Height: 70, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "floating.jpg", ThumbURL: "floating_thumb.jpg", Title: "Floating on the surface of a planet", Medium: "", Width: 98, Height: 70, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "fluids.jpg", ThumbURL: "fluids_thumb.jpg", Title: "Amniotic Fluids Spa & Resort", Medium: "", Width: 95, Height: 95, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "pourguy.jpg", ThumbURL: "pourguy_thumb.jpg", Title: "Pour guy", Medium: "", Width: 90, Height: 100, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "born.jpg", ThumbURL: "born_thumb.jpg", Title: "Rebirth", Medium: "", Width: 70, Height: 100, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "100000.jpg", ThumbURL: "100000.jpg", Title: "100 000", Medium: "", Width: 70, Height: 70, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "mother.jpg", ThumbURL: "mother.jpg", Title: "Mother", Medium: "", Width: 70, Height: 70, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "grimas2.jpg", ThumbURL: "grimas2_thumb.jpg", Title: "Grimas 2", Medium: "", Width: 70, Height: 70, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "hungrig.jpg", ThumbURL: "hungrig_thumb.jpg", Title: "Hungrig", Medium: "", Width: 0, Height: 0, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "yard2.jpg", ThumbURL: "yard2_thumb.jpg", Title: "", Medium: "", Width: 0, Height: 0, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "teeth.jpg", ThumbURL: "teeth_thumb.jpg", Title: "Donut hole", Medium: "", Width: 70, Height: 70, Year: "", Description: "", Sold: true, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "things.jpg", ThumbURL: "things_thumb.jpg", Title: "The things we leave behind", Medium: "", Width: 120, Height: 95, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})
+db.AddArt(db.Art{ImgURL: "trump.jpg", ThumbURL: "trump_thumb.jpg", Title: "The anatomy of a plastic white house", Medium: "", Width: 1, Height: 1, Year: "", Description: "", Sold: false, CreatedAt: time.Now().Format(time.RFC3339)})

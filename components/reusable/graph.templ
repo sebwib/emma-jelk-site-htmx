@@ -1,0 +1,46 @@
+package reusable
+
+import "github.com/sebwib/emma-site-htmx/components/id"
+
+templ Graph(graphID string, clickToNav bool) {
+	<a
+		class="block w-full"
+		if clickToNav {
+			hx-trigger="click"
+			hx-get={ "/dashboard/" + graphID }
+			hx-target={ id.Selector(id.ContentID) }
+			hx-push-url={ true }
+			hx-swap="innerHTML show:window:top"
+		}
+	>
+		<canvas id={ graphID } class="w-full h-[300px] bg-gray-100 border border-gray-300 rounded-lg"></canvas>
+	</a>
+	<script type="module">
+    import { graphs } from '/static/js/graphs.js';
+
+    (function() {
+      let chart;
+      const container = document.getElementById({{ graphID }});
+
+      const poll = async (mount) => {
+        const response = await fetch("/dashboard/data/{{ graphID }}");
+        const {data, datasetLabel, labels} = await response.json();
+
+        if (mount) {
+          chart = graphs.mountChart(container, datasetLabel, labels, data);
+        } else {
+          chart.data.labels = labels;
+          chart.data.datasets[0].data = data;
+          chart.update();
+        }
+      }
+
+      const interval = setInterval(poll, 1000);
+      poll(true);
+
+			container.addEventListener('htmx:beforeCleanupElement', () => {
+        clearInterval(interval);
+			});
+    })();
+  </script>
+}

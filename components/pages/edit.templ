@@ -1,0 +1,177 @@
+package pages
+
+import (
+	"fmt"
+	"github.com/sebwib/emma-site-htmx/components/id"
+	"github.com/sebwib/emma-site-htmx/db"
+	"strconv"
+)
+
+templ Edit(arts []db.Art) {
+	<div class="flex flex-col p-6 gap-6 z-[4]">
+		<h2 class="text-2xl">Art</h2>
+		<table id="art-table" class="border-collapse">
+			<thead>
+				<tr>
+					<th class="p-2 text-left">Drag</th>
+					<th class="p-2 text-left">Title</th>
+					<th class="p-2 text-left">Width</th>
+					<th class="p-2 text-left">Height</th>
+					<th class="p-2 text-left">Image URL</th>
+					<th class="p-2 text-left">Ordering</th>
+					<th class="p-2 text-left"></th>
+				</tr>
+			</thead>
+			<tbody id="art-tbody">
+				for i, art := range arts {
+					<tr
+						draggable="true"
+						data-id={ art.Id }
+						data-ordering={ fmt.Sprintf("%.6f", art.Ordering) }
+						data-index={ strconv.Itoa(i) }
+						class="border-b hover:bg-gray-100 cursor-move"
+					>
+						<td class="p-2">⋮⋮</td>
+						<td class="p-2">
+							{ art.Title }
+						</td>
+						<td class="p-2">
+							{ strconv.Itoa(art.Width) }
+						</td>
+						<td class="p-2">
+							{ strconv.Itoa(art.Height) }
+						</td>
+						<td class="p-2">
+							<a target="_blank" href={ templ.URL("/static/upload/" + art.ImgURL) } class="text-blue-600 hover:underline">
+								{ art.ImgURL }
+							</a>
+						</td>
+						<td class="ordering p-2 text-sm text-gray-500">
+							{ fmt.Sprintf("%.6f", art.Ordering) }
+						</td>
+						<td>
+							<button
+							 	class="rounded bg-blue-500 text-white px-3 py-1 hover:bg-blue-600 transition-colors"
+								hx-get={ "/edit/art/modal/" + art.Id }
+								hx-target={ id.Selector(id.ModalContainerID) }
+								hx-swap="innerHTML"
+							>
+								Edit
+							</button>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	<script>
+		(function() {
+			const tbody = document.getElementById('art-tbody');
+			let draggedElement = null;
+
+			tbody.addEventListener('dragstart', function(e) {
+				if (e.target.tagName === 'TR') {
+					draggedElement = e.target;
+					e.target.style.opacity = '0.4';
+				}
+			});
+
+			tbody.addEventListener('dragend', function(e) {
+				if (e.target.tagName === 'TR') {
+					e.target.style.opacity = '1';
+				}
+			});
+
+			tbody.addEventListener('dragover', function(e) {
+				e.preventDefault();
+				const afterElement = getDragAfterElement(tbody, e.clientY);
+				if (afterElement == null) {
+					tbody.appendChild(draggedElement);
+				} else {
+					tbody.insertBefore(draggedElement, afterElement);
+				}
+			});
+
+			tbody.addEventListener('drop', function(e) {
+				e.preventDefault();
+				if (!draggedElement) return;
+
+				const draggedId = draggedElement.dataset.id;
+				const rows = Array.from(tbody.querySelectorAll('tr'));
+				const draggedIndex = rows.indexOf(draggedElement);
+
+				// Calculate new ordering
+				let newOrdering;
+				const prevRow = rows[draggedIndex - 1];
+				const nextRow = rows[draggedIndex + 1];
+
+				console.log({prevRow, nextRow})
+				if (!prevRow && !nextRow) {
+					// Only one row
+					newOrdering = 1.0;
+				} else if (!prevRow) {
+					// First position
+					const nextOrdering = parseFloat(nextRow.dataset.ordering);
+					newOrdering = nextOrdering + 1.0;
+				} else if (!nextRow) {
+					// Last position
+					const prevOrdering = parseFloat(prevRow.dataset.ordering);
+					newOrdering = prevOrdering - 1.0;
+				} else {
+					// Between two rows
+					const prevOrdering = parseFloat(prevRow.dataset.ordering);
+					const nextOrdering = parseFloat(nextRow.dataset.ordering);
+					newOrdering = (prevOrdering + nextOrdering) / 2.0;
+				}
+
+				// Update the data attribute
+				draggedElement.dataset.ordering = newOrdering.toFixed(6);
+
+				console.log(`Updating art ID ${draggedId} to new ordering: ${newOrdering}`);
+				const draggedMemory = draggedElement
+
+				// Send PATCH request
+				fetch(`/edit/art/${draggedId}`, {
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						ordering: newOrdering
+					})
+				})
+				.then(response => {
+					if (!response.ok) {
+						console.error('Failed to update ordering');
+					} else {
+						// Update the displayed ordering value
+						const orderingCell = draggedMemory?.querySelector('.ordering');
+						if (orderingCell) {
+							orderingCell.textContent = newOrdering.toFixed(6);
+						}
+					}
+				})
+				.catch(error => {
+					console.error('Error updating ordering:', error);
+				});
+
+				draggedElement = null;
+			});
+
+			function getDragAfterElement(container, y) {
+				const draggableElements = [...container.querySelectorAll('tr:not(.dragging)')];
+
+				return draggableElements.reduce((closest, child) => {
+					const box = child.getBoundingClientRect();
+					const offset = y - box.top - box.height / 2;
+
+					if (offset < 0 && offset > closest.offset) {
+						return { offset: offset, element: child };
+					} else {
+						return closest;
+					}
+				}, { offset: Number.NEGATIVE_INFINITY }).element;
+			}
+		})();
+	</script>
+}

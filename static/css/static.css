@@ -1,0 +1,48 @@
+#chat-window p, #chat-window strong, #chat-window i {
+  display: inline;
+  animation: fadeIn 0.1s ease-in;
+  scroll-behavior: smooth;
+}
+
+* {
+  font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+svg:hover {
+  opacity: 0.7;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+ol {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  list-style: decimal;
+}
+
+ul {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  list-style: disc;
+}
+
+li {
+  margin-left: 20px;
+}
+
+td {
+  padding: 4px;
+  border: 1px solid #ddd;
+}
+
+th {
+  padding: 4px;
+  text-align: left;
+}

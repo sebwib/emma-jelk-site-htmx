@@ -1,0 +1,23 @@
+package layout
+
+import (
+	"github.com/sebwib/emma-site-htmx/components/id"
+	"log"
+)
+
+templ Background(currentPath string, oobSwap bool) {
+	{{ log.Println("currentpath", currentPath) }}
+	<div
+		id={ id.BackgroundID }
+		if (oobSwap) {
+			hx-swap="outerHTML"
+			hx-swap-oob="true"
+		}
+		class="fixed top-0 left-0 w-full h-full transition-all duration-500 ease-out"
+		if currentPath == "/" {
+			style="background-color: black; background: url(/static/img/cold_fire_hq.jpg) no-repeat bottom left fixed; background-position-x: 50%; background-position-y: 90%; background-size: cover"
+		} else {
+			style="background-color: white; background-position-x: 50%; background-position-y: 90%; background-size: cover"
+		}
+	></div>
+}

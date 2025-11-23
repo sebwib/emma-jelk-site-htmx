@@ -1,0 +1,75 @@
+package reusable
+
+import (
+	"strconv"
+	"strings"
+)
+
+type Row struct {
+	Attr  templ.Attributes
+	Cells []string
+}
+
+templ Table(headers []string, rows []Row, page int, getMoreEndpoint *string) {
+	<table class="min-w-full border-collapse border border-gray-200">
+		<thead>
+			<tr
+				class="bg-gray-100"
+			>
+				for _, header := range headers {
+					<th class="border border-gray-300 px-4 py-2 text-left">{ header }</th>
+				}
+			</tr>
+		</thead>
+		<tbody>
+			if getMoreEndpoint != nil {
+				@TableRowsWithGetMore(rows, page, *getMoreEndpoint)
+			} else {
+				@TableRows(rows, page)
+			}
+		</tbody>
+	</table>
+}
+
+templ TableRowsWithGetMore(rows []Row, page int, getMoreEndpoint string) {
+	{{
+		hasParams := strings.Contains(getMoreEndpoint, "?")
+		separator := "?"
+		if hasParams {
+			separator = "&"
+		}
+	}}
+	for i, row := range rows {
+		{{ isLast := i == len(rows)-1 }}
+		<tr
+			{ row.Attr... }
+		>
+			for i, cell := range row.Cells {
+				<td
+					class="border border-gray-300 px-4 py-2"
+					if i == 0 && isLast {
+						hx-get={ getMoreEndpoint + separator + "page=" + strconv.Itoa(page+1) }
+						hx-trigger="revealed"
+						hx-target="closest tr"
+						hx-swap="afterend"
+						hx-push-url="false"
+					}
+				>
+					{ cell }
+				</td>
+			}
+		</tr>
+	}
+}
+
+templ TableRows(rows []Row, page int) {
+	for _, row := range rows {
+		<tr
+			{ row.Attr... }
+		>
+			for _, cell := range row.Cells {
+				<td class="border border-gray-300 px-4 py-2">{ cell }</td>
+			}
+		</tr>
+	}
+}
