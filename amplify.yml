@@ -1,0 +1,34 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # Install Go
+        - wget https://go.dev/dl/go1.24.10.linux-amd64.tar.gz
+        - tar -C /usr/local -xzf go1.24.10.linux-amd64.tar.gz
+        - export PATH=$PATH:/usr/local/go/bin
+        - go version
+        # Install templ CLI
+        - go install github.com/a-h/templ/cmd/templ@latest
+        - export PATH=$PATH:$(go env GOPATH)/bin
+        # Install Node dependencies
+        - npm ci
+    build:
+      commands:
+        # Generate templ files
+        - templ generate
+        # Build Tailwind CSS
+        - npm run build
+        # Build Go binary
+        - go build -o main .
+  artifacts:
+    baseDirectory: /
+    files:
+      - main
+      - static/**/*
+      - db.db
+      - .env
+  cache:
+    paths:
+      - node_modules/**/*
+      - /root/go/pkg/mod/**/*
