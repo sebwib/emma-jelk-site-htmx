@@ -23,3 +23,7 @@ The `/edit` route is protected and requires login.
 - Navigate to `/login` to access the login page
 - Sessions last 24 hours
 - Use `/logout` to end your session (POST request)
+
+docker build --platform linux/amd64 -t emma-site-htmx:latest .
+docker tag emma-site-htmx:latest 198576290984.dkr.ecr.eu-central-1.amazonaws.com/emma-site-htmx:latest
+docker push 198576290984.dkr.ecr.eu-central-1.amazonaws.com/emma-site-htmx:latest
