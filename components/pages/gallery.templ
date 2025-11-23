@@ -4,6 +4,7 @@ import (
 	"github.com/sebwib/emma-site-htmx/components/id"
 	"github.com/sebwib/emma-site-htmx/db"
 	"strconv"
+	"strings"
 )
 
 templ Gallery(arts []db.Art, page int) {
@@ -25,7 +26,7 @@ templ ArtGrid(arts []db.Art, page int) {
 			hx-push-url="false"
 		>
 			<img
-				src={ "/static/upload/" + art.ThumbURL }
+				src={ getImgUrl(art.ThumbURL) }
 				alt={ art.Title }
 				class="w-full h-[40vh] sm:h-[31vw] object-cover"
 				if i == len(arts) - 1 {
@@ -38,4 +39,11 @@ templ ArtGrid(arts []db.Art, page int) {
 			/>
 		</a>
 	}
+}
+
+func getImgUrl(url string) string {
+	if strings.Contains(url, "/") {
+		return url
+	}
+	return "/static/upload/" + url
 }

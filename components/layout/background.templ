@@ -2,11 +2,9 @@ package layout
 
 import (
 	"github.com/sebwib/emma-site-htmx/components/id"
-	"log"
 )
 
 templ Background(currentPath string, oobSwap bool) {
-	{{ log.Println("currentpath", currentPath) }}
 	<div
 		id={ id.BackgroundID }
 		if (oobSwap) {

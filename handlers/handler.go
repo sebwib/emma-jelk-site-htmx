@@ -12,17 +12,20 @@ import (
 	"github.com/sebwib/emma-site-htmx/components/partial"
 	"github.com/sebwib/emma-site-htmx/components/reusable"
 	"github.com/sebwib/emma-site-htmx/db"
+	"github.com/sebwib/emma-site-htmx/services"
 )
 
 type Handler struct {
-	DB     *db.DB
-	Routes []partial.Route
+	DB            *db.DB
+	Routes        []partial.Route
+	ImageUploader *services.ImageUploader
 }
 
-func NewHandler(database *db.DB, routes []partial.Route) *Handler {
+func NewHandler(database *db.DB, routes []partial.Route, imageUploader *services.ImageUploader) *Handler {
 	return &Handler{
-		DB:     database,
-		Routes: routes,
+		DB:            database,
+		Routes:        routes,
+		ImageUploader: imageUploader,
 	}
 }
 

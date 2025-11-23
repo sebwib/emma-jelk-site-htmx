@@ -12,6 +12,7 @@ import (
 	"github.com/sebwib/emma-site-htmx/db"
 	"github.com/sebwib/emma-site-htmx/handlers"
 	authmw "github.com/sebwib/emma-site-htmx/middleware"
+	"github.com/sebwib/emma-site-htmx/services"
 )
 
 var routes = []partial.Route{
@@ -35,10 +36,16 @@ func main() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
+	// Initialize image uploader
+	imageUploader, err := services.NewImageUploader()
+	if err != nil {
+		log.Fatalf("Failed to initialize image uploader: %v", err)
+	}
+
 	// Initialize session store
 	sessionStore := authmw.NewSessionStore()
 
-	h := handlers.NewHandler(db, routes)
+	h := handlers.NewHandler(db, routes, imageUploader)
 	registerMiddlewares(r)
 	registerRoutes(h, r, sessionStore)
 

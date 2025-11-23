@@ -18,9 +18,16 @@ func (h *Handler) RegisterEditRoutes(r chi.Router, store *middleware.SessionStor
 		r.Use(middleware.RequireAuth(store))
 		r.Get("/edit", h.edit)
 		r.Get("/edit/resetorder", h.resetArtOrder)
+		r.Get("/edit/art/modal/new", h.addModal)
 		r.Get("/edit/art/modal/{id}", h.editModal)
 		r.Patch("/edit/art/{id}", h.patchArt)
+		r.Post("/edit/upload", h.uploadImage)
+		r.Post("/edit/art", h.createArt)
 	})
+}
+
+func (h *Handler) addModal(w http.ResponseWriter, r *http.Request) {
+	h.render(w, r, pages.AddArtModal(), true)
 }
 
 func (h *Handler) editModal(w http.ResponseWriter, r *http.Request) {
@@ -145,4 +152,69 @@ func (h *Handler) patchArt(w http.ResponseWriter, r *http.Request) {
 	// For JSON (drag-and-drop), return success message
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "Art updated successfully"})
+}
+
+func (h *Handler) uploadImage(w http.ResponseWriter, r *http.Request) {
+	// Parse multipart form (max 10MB)
+	if err := r.ParseMultipartForm(10 << 20); err != nil {
+		http.Error(w, "Failed to parse form", http.StatusBadRequest)
+		return
+	}
+
+	file, header, err := r.FormFile("image")
+	if err != nil {
+		http.Error(w, "Failed to get file", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	// Upload image
+	url, err := h.ImageUploader.UploadImage(file, header)
+	if err != nil {
+		log.Printf("Failed to upload image: %v", err)
+		http.Error(w, "Failed to upload image", http.StatusInternalServerError)
+		return
+	}
+
+	// Return the URL as JSON
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{"url": url})
+}
+
+func (h *Handler) createArt(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, "Failed to parse form", http.StatusBadRequest)
+		return
+	}
+
+	// Parse form values
+	width, _ := strconv.Atoi(r.FormValue("width"))
+	height, _ := strconv.Atoi(r.FormValue("height"))
+	sold, _ := strconv.ParseBool(r.FormValue("sold"))
+
+	log.Println("form title", r.FormValue("title"))
+
+	// Create new art entry
+	art := db.Art{
+		ImgURL:      r.FormValue("img_url"),
+		ThumbURL:    r.FormValue("thumb_url"),
+		Title:       r.FormValue("title"),
+		Medium:      r.FormValue("medium"),
+		Width:       width,
+		Height:      height,
+		Year:        r.FormValue("year"),
+		Description: r.FormValue("description"),
+		Sold:        sold,
+		CreatedAt:   r.FormValue("created_at"),
+	}
+
+	log.Println("title", art.Title)
+	if err := h.DB.AddArt(art); err != nil {
+		h.handleError(w, "Failed to create art", http.StatusInternalServerError, err)
+		return
+	}
+
+	// Redirect back to edit page
+	//w.Header().Set("HX-Redirect", "/edit")
+	w.WriteHeader(http.StatusOK)
 }
