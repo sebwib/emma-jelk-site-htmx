@@ -38,9 +38,7 @@ WORKDIR /root/
 # Copy binary and static files from builder
 COPY --from=builder /app/main .
 COPY --from=builder /app/static ./static
-
-# Create empty db.db file (will be replaced by volume in production)
-RUN touch db.db
+COPY --from=builder /app/db.db ./db.db
 
 EXPOSE 8080
 
