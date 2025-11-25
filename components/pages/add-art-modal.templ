@@ -10,7 +10,7 @@ templ AddArtModal() {
 		<div id={ id.EditArtModalInner } class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
 			<h2 class="text-2xl mb-4">Add New Art</h2>
 			<form
-				hx-post="/edit/art"			
+				hx-post="/edit/art"
 				class="flex flex-col gap-4"
 			>
 				<label class="flex flex-col">
@@ -46,18 +46,8 @@ templ AddArtModal() {
 						class="border p-2 rounded"
 					/>
 					<input type="hidden" name="img_url" id="img-url-input"/>
-					<div id="main-image-preview" class="mt-2"></div>
-				</label>
-				<label class="flex flex-col">
-					<span class="mb-1 font-medium">Thumbnail Image</span>
-					<input
-						type="file"
-						id="thumb-image"
-						accept="image/*"
-						class="border p-2 rounded"
-					/>
 					<input type="hidden" name="thumb_url" id="thumb-url-input"/>
-					<div id="thumb-image-preview" class="mt-2"></div>
+					<div id="main-image-preview" class="mt-2"></div>
 				</label>
 				<label class="flex items-center gap-2">
 					<input type="checkbox" name="sold" value="true" class="rounded"/>
@@ -86,14 +76,12 @@ templ AddArtModal() {
 		<script>
 			(function(){
 				const mainImageInput = document.getElementById('main-image');
-				const thumbImageInput = document.getElementById('thumb-image');
 				const imgUrlInput = document.getElementById('img-url-input');
 				const thumbUrlInput = document.getElementById('thumb-url-input');
 				const mainPreview = document.getElementById('main-image-preview');
-				const thumbPreview = document.getElementById('thumb-image-preview');
 				const submitBtn = document.getElementById('submit-btn');
 
-				async function uploadImage(file, previewEl, urlInput) {
+				async function uploadImage(file, previewEl, urlInput, thumbUrlInput) {
 					const formData = new FormData();
 					formData.append('image', file);
 
@@ -107,6 +95,7 @@ templ AddArtModal() {
 
 						const data = await response.json();
 						urlInput.value = data.url;
+						thumbUrlInput.value = data.thumb_url;
 						
 						previewEl.innerHTML = `<img src="${data.url}" class="max-w-full h-32 object-contain border rounded"/>`;
 						return true;
@@ -120,16 +109,7 @@ templ AddArtModal() {
 					if (e.target.files[0]) {
 						submitBtn.disabled = true;
 						mainPreview.innerHTML = '<p class="text-sm text-gray-600">Uploading...</p>';
-						await uploadImage(e.target.files[0], mainPreview, imgUrlInput);
-						submitBtn.disabled = false;
-					}
-				});
-
-				thumbImageInput.addEventListener('change', async (e) => {
-					if (e.target.files[0]) {
-						submitBtn.disabled = true;
-						thumbPreview.innerHTML = '<p class="text-sm text-gray-600">Uploading...</p>';
-						await uploadImage(e.target.files[0], thumbPreview, thumbUrlInput);
+						await uploadImage(e.target.files[0], mainPreview, imgUrlInput, thumbUrlInput);
 						submitBtn.disabled = false;
 					}
 				});

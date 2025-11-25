@@ -7,8 +7,94 @@ import (
 	"strconv"
 )
 
-templ Edit(arts []db.Art) {
+templ ArtRow(art db.Art, i int) {
+	{{ encodedID := "ID-" + art.Id }}
+	<tr
+		draggable="true"
+		data-id={ art.Id }
+		data-ordering={ fmt.Sprintf("%.6f", art.Ordering) }
+		data-index={ strconv.Itoa(i) }
+		class="border-b hover:bg-gray-100 cursor-move"
+	>
+		<td class="p-2">⋮⋮</td>
+		<td class="p-2">
+			{ art.Title }
+		</td>
+		<td class="p-2">
+			{ strconv.Itoa(art.Width) }
+		</td>
+		<td class="p-2">
+			{ strconv.Itoa(art.Height) }
+		</td>
+		<td class="p-2">
+			<a target="_blank" href={ templ.URL(getImgUrl(art.ImgURL)) } class="text-blue-600 hover:underline">
+				{ art.ImgURL }
+			</a>
+		</td>
+		<td class="ordering p-2 text-sm text-gray-500">
+			{ fmt.Sprintf("%.6f", art.Ordering) }
+		</td>
+		<td class="p-2">
+			<form
+				hx-patch={ "/edit/art/" + art.Id + "/sold" }
+				hx-target="closest tr"
+				hx-swap="outerHTML"
+				hx-push-url="false"
+				hx-trigger={ "change from:" + id.Selector(encodedID+"sold") }
+			>
+				<input id={ encodedID + "sold" } onpointerdown="event.stopPropagation(); event.stopImmediatePropagation()" draggable="false" name="sold" type="checkbox" { boolToCheckedString(art.Sold) }/>
+			</form>
+		</td>
+		<td class="p-2">
+			<form
+				hx-patch={ "/edit/art/" + art.Id + "/show_in_gallery" }
+				hx-target="closest tr"
+				hx-swap="outerHTML"
+				hx-push-url="false"
+				hx-trigger={ "change from:" + id.Selector(encodedID+"show") }
+			>
+				<input id={ encodedID + "show" } onpointerdown="event.stopPropagation(); event.stopImmediatePropagation()" draggable="false" name="show_in_gallery" type="checkbox" { boolToCheckedString(art.ShowInGallery) }/>
+			</form>
+		</td>
+		<td>
+			<div class="flex gap-2">
+				<button
+					class="rounded bg-blue-500 text-white px-3 py-1 hover:bg-blue-600 transition-colors"
+					hx-get={ "/edit/art/modal/" + art.Id }
+					hx-target={ id.Selector(id.ModalContainerID) }
+					hx-swap="innerHTML"
+				>
+					Edit
+				</button>
+				<button
+					class="rounded bg-red-500 text-white px-3 py-1 hover:bg-red-600 transition-colors"
+					hx-delete={ "/edit/art/" + art.Id }
+					hx-target="closest tr"
+					hx-swap="outerHTML"
+					hx-confirm="Are you sure you want to delete this art?"
+				>
+					Delete
+				</button>
+			</div>
+		</td>
+	</tr>
+}
+
+templ Edit(arts []db.Art, references []db.StoredText) {
 	<div class="flex flex-col p-6 gap-6 z-[4]">
+		<h2 class="text-2xl">Static content</h2>
+		<div class="flex gap-2 flex-wrap">
+			for _, ref := range references {
+				<button
+					class="rounded whitespace-nowrap bg-blue-500 text-white px-3 py-1 hover:bg-blue-600 transition-colors"
+					hx-get={ "/edit/storedtext/modal/" + ref.ReferenceID }
+					hx-target={ id.Selector(id.ModalContainerID) }
+					hx-swap="innerHTML"
+				>
+					Change { ref.ReferenceID } title
+				</button>
+			}
+		</div>
 		<div class="flex justify-between items-center">
 			<h2 class="text-2xl">Art</h2>
 			<button
@@ -29,47 +115,14 @@ templ Edit(arts []db.Art) {
 					<th class="p-2 text-left">Height</th>
 					<th class="p-2 text-left">Image URL</th>
 					<th class="p-2 text-left">Ordering</th>
+					<th class="p-2 text-left">Sold?</th>
+					<th class="p-2 text-left">Show?</th>
 					<th class="p-2 text-left"></th>
 				</tr>
 			</thead>
 			<tbody id="art-tbody">
 				for i, art := range arts {
-					<tr
-						draggable="true"
-						data-id={ art.Id }
-						data-ordering={ fmt.Sprintf("%.6f", art.Ordering) }
-						data-index={ strconv.Itoa(i) }
-						class="border-b hover:bg-gray-100 cursor-move"
-					>
-						<td class="p-2">⋮⋮</td>
-						<td class="p-2">
-							{ art.Title }
-						</td>
-						<td class="p-2">
-							{ strconv.Itoa(art.Width) }
-						</td>
-						<td class="p-2">
-							{ strconv.Itoa(art.Height) }
-						</td>
-						<td class="p-2">
-							<a target="_blank" href={ templ.URL("/static/upload/" + art.ImgURL) } class="text-blue-600 hover:underline">
-								{ art.ImgURL }
-							</a>
-						</td>
-						<td class="ordering p-2 text-sm text-gray-500">
-							{ fmt.Sprintf("%.6f", art.Ordering) }
-						</td>
-						<td>
-							<button
-							 	class="rounded bg-blue-500 text-white px-3 py-1 hover:bg-blue-600 transition-colors"
-								hx-get={ "/edit/art/modal/" + art.Id }
-								hx-target={ id.Selector(id.ModalContainerID) }
-								hx-swap="innerHTML"
-							>
-								Edit
-							</button>
-						</td>
-					</tr>
+					@ArtRow(art, i)
 				}
 			</tbody>
 		</table>
@@ -137,7 +190,6 @@ templ Edit(arts []db.Art) {
 				// Update the data attribute
 				draggedElement.dataset.ordering = newOrdering.toFixed(6);
 
-				console.log(`Updating art ID ${draggedId} to new ordering: ${newOrdering}`);
 				const draggedMemory = draggedElement
 
 				// Send PATCH request
@@ -184,4 +236,11 @@ templ Edit(arts []db.Art) {
 			}
 		})();
 	</script>
+}
+
+func boolToCheckedString(b bool) string {
+	if b {
+		return "checked"
+	}
+	return ""
 }

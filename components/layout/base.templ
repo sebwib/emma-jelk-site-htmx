@@ -12,7 +12,7 @@ templ Base(routes []partial.Route, db *db.DB, currentPath string, children ...te
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>Playing with HTMX+Templ+Go</title>
+			<title>Emma Jelk</title>
 			<!-- Google Fonts preconnect -->
 			<link rel="preconnect" href="https://fonts.googleapis.com"/>
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
@@ -30,7 +30,7 @@ templ Base(routes []partial.Route, db *db.DB, currentPath string, children ...te
 					if (cookieValue) {
 						localStorage.setItem('sidebar-collapsed', cookieValue);
 					}
-					
+
 					window.addEventListener('keydown', function(event) {
 						if (event.key === 'Escape') {
 							htmx.ajax("GET", "/modal/close", {

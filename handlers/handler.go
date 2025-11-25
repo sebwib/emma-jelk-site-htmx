@@ -21,6 +21,25 @@ type Handler struct {
 	ImageUploader *services.ImageUploader
 }
 
+func (h *Handler) getRoutesWithReferences(routes []partial.Route) []partial.Route {
+	references, err := h.DB.GetReferences()
+	if err != nil {
+		log.Println("get references", err)
+		return routes
+	}
+
+	_routes := make([]partial.Route, len(routes))
+	copy(_routes, routes)
+	for i, route := range _routes {
+		for _, ref := range references {
+			if route.Name == "ref:"+ref.ReferenceID {
+				_routes[i].Name = ref.Content
+			}
+		}
+	}
+	return _routes
+}
+
 func NewHandler(database *db.DB, routes []partial.Route, imageUploader *services.ImageUploader) *Handler {
 	return &Handler{
 		DB:            database,
@@ -50,10 +69,10 @@ func (h *Handler) render(w http.ResponseWriter, r *http.Request, content templ.C
 	var component templ.Component
 
 	if h.isHTMX(r) {
-		component = layout.Content(h.Routes, h.DB, r.URL.Path, content)
+		component = layout.Content(h.getRoutesWithReferences(h.Routes), h.DB, r.URL.Path, content)
 	} else {
 		// Regular request - return full page with sidebar showing current path
-		component = layout.Base(h.Routes, h.DB, r.URL.Path, content)
+		component = layout.Base(h.getRoutesWithReferences(h.Routes), h.DB, r.URL.Path, content)
 	}
 
 	templ.Handler(component).ServeHTTP(w, r)
@@ -84,7 +103,7 @@ func (h *Handler) handleMethodNotAllowed(w http.ResponseWriter) {
 }
 
 func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
-	h.render(w, r, pages.Index(h.Routes), false)
+	h.render(w, r, pages.Index(h.getRoutesWithReferences(h.Routes)), false)
 	h.render(w, r, layout.Background(r.URL.Path, true), true)
 }
 

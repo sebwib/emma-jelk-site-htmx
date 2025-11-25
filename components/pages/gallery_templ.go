@@ -112,9 +112,9 @@ func ArtGrid(arts []db.Art, page int) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(getImgUrl(art.ThumbURL))
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(getThumbUrl(art.ThumbURL, art.ImgURL))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/gallery.templ`, Line: 29, Col: 33}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/gallery.templ`, Line: 29, Col: 47}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -163,6 +163,17 @@ func ArtGrid(arts []db.Art, page int) templ.Component {
 		}
 		return nil
 	})
+}
+
+func getThumbUrl(thumbURL string, imgURL string) string {
+	url := thumbURL
+	if url == "" {
+		url = imgURL
+	}
+	if strings.Contains(url, "/") {
+		return url
+	}
+	return "/static/upload/" + url
 }
 
 func getImgUrl(url string) string {

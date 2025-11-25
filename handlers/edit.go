@@ -2,13 +2,14 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/sebwib/emma-site-htmx/components/layout"
 	"github.com/sebwib/emma-site-htmx/components/pages"
+	"github.com/sebwib/emma-site-htmx/components/reusable"
 	"github.com/sebwib/emma-site-htmx/db"
 	"github.com/sebwib/emma-site-htmx/middleware"
 )
@@ -20,10 +21,60 @@ func (h *Handler) RegisterEditRoutes(r chi.Router, store *middleware.SessionStor
 		r.Get("/edit/resetorder", h.resetArtOrder)
 		r.Get("/edit/art/modal/new", h.addModal)
 		r.Get("/edit/art/modal/{id}", h.editModal)
+		r.Get("/edit/storedtext/modal/{id}", h.storedTextModal)
+		r.Put("/edit/storedtext/{id}", h.updateStoredText)
 		r.Patch("/edit/art/{id}", h.patchArt)
+		r.Patch("/edit/art/{id}/{field}", h.patchArtField)
 		r.Post("/edit/upload", h.uploadImage)
 		r.Post("/edit/art", h.createArt)
+		r.Delete("/edit/art/{id}", h.deleteArt)
 	})
+}
+
+func (h *Handler) updateStoredText(w http.ResponseWriter, r *http.Request) {
+	referenceID := chi.URLParam(r, "id")
+
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, "Failed to parse form", http.StatusBadRequest)
+		return
+	}
+
+	content := r.FormValue("content")
+
+	storedText := db.StoredText{
+		ReferenceID: referenceID,
+		Content:     content,
+	}
+
+	if err := h.DB.AddStoredText(storedText); err != nil {
+		h.handleError(w, "Failed to update stored text", http.StatusInternalServerError, err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func (h *Handler) storedTextModal(w http.ResponseWriter, r *http.Request) {
+	referenceID := chi.URLParam(r, "id")
+
+	storedText, err := h.DB.GetStoredTextByReferenceID(referenceID)
+	if err != nil {
+		h.handleError(w, "Failed to load stored text", http.StatusInternalServerError, err)
+		return
+	}
+
+	h.render(w, r, pages.EditStoredTextModal(referenceID, storedText[0].Content), true)
+}
+
+func (h *Handler) deleteArt(w http.ResponseWriter, r *http.Request) {
+	artID := chi.URLParam(r, "id")
+
+	if err := h.DB.DeleteArt(artID); err != nil {
+		h.handleError(w, "Failed to delete art", http.StatusInternalServerError, err)
+		return
+	}
+
+	h.render(w, r, reusable.Empty(), true)
 }
 
 func (h *Handler) addModal(w http.ResponseWriter, r *http.Request) {
@@ -59,9 +110,15 @@ func (h *Handler) resetArtOrder(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	references, err := h.DB.GetReferences()
+	if err != nil {
+		h.handleError(w, "Failed to load references", http.StatusInternalServerError, err)
+		return
+	}
+
 	// oob update background
-	h.render(w, r, layout.Background(r.URL.Path, true), true)
-	h.render(w, r, pages.Edit(arts), false)
+	//h.render(w, r, layout.Background(r.URL.Path, true), true)
+	h.render(w, r, pages.Edit(arts, references), false)
 }
 
 func (h *Handler) edit(w http.ResponseWriter, r *http.Request) {
@@ -71,9 +128,51 @@ func (h *Handler) edit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	references, err := h.DB.GetReferences()
+	if err != nil {
+		h.handleError(w, "Failed to load references", http.StatusInternalServerError, err)
+		return
+	}
+
 	// oob update background
-	h.render(w, r, layout.Background(r.URL.Path, true), true)
-	h.render(w, r, pages.Edit(arts), false)
+	//h.render(w, r, layout.Background(r.URL.Path, true), true)
+	h.render(w, r, pages.Edit(arts, references), false)
+}
+
+func (h *Handler) patchArtField(w http.ResponseWriter, r *http.Request) {
+	artID := chi.URLParam(r, "id")
+	field := chi.URLParam(r, "field")
+
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, "Failed to parse form", http.StatusBadRequest)
+		return
+	}
+
+	value := r.FormValue(field)
+
+	// Convert value to appropriate type based on field
+	var err error
+	switch field {
+	case "sold", "show_in_gallery":
+		boolValue := value == "true" || value == "1" || value == "on"
+		err = h.DB.UpdateArtField(artID, field, boolValue)
+	default:
+		err = h.DB.UpdateArtField(artID, field, value)
+	}
+
+	if err != nil {
+		h.handleError(w, "Failed to update art field", http.StatusInternalServerError, err)
+		return
+	}
+
+	art, err := h.DB.GetArtById(artID)
+	if err != nil {
+		h.handleError(w, "Failed to load updated art", http.StatusInternalServerError, err)
+		return
+	}
+
+	// Return updated art row
+	h.render(w, r, pages.ArtRow(*art, 0), true)
 }
 
 func (h *Handler) patchArt(w http.ResponseWriter, r *http.Request) {
@@ -84,6 +183,7 @@ func (h *Handler) patchArt(w http.ResponseWriter, r *http.Request) {
 
 	// Handle both JSON (from drag-and-drop) and form data (from modal)
 	if contentType == "application/json" {
+
 		if err := json.NewDecoder(r.Body).Decode(&patch); err != nil {
 			http.Error(w, "Invalid JSON body", http.StatusBadRequest)
 			return
@@ -125,8 +225,12 @@ func (h *Handler) patchArt(w http.ResponseWriter, r *http.Request) {
 			patch.ThumbURL = &thumbURL
 		}
 		if soldStr := r.FormValue("sold"); soldStr != "" {
-			sold := soldStr == "true" || soldStr == "1"
+			sold := soldStr == "true" || soldStr == "1" || soldStr == "on"
 			patch.Sold = &sold
+		}
+		if showInGalleryStr := r.FormValue("show_in_gallery"); showInGalleryStr != "" {
+			showInGallery := showInGalleryStr == "true" || showInGalleryStr == "1" || showInGalleryStr == "on"
+			patch.ShowInGallery = &showInGallery
 		}
 	}
 
@@ -137,21 +241,22 @@ func (h *Handler) patchArt(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if replaceParam := r.URL.Query().Get("replace"); replaceParam == "true" {
-		// Use HX-Redirect to reload the page
 		w.Header().Set("HX-Redirect", "/edit")
-		w.WriteHeader(http.StatusOK)
 		return
 	}
 
-	// For form submissions (HTMX), close the modal
-	if contentType != "application/json" {
-		w.WriteHeader(http.StatusOK)
+	art, err := h.DB.GetArtById(artID)
+	if err != nil {
+		h.handleError(w, "Failed to load updated art", http.StatusInternalServerError, err)
 		return
 	}
 
-	// For JSON (drag-and-drop), return success message
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{"message": "Art updated successfully"})
+	fmt.Println(art.Id)
+	fmt.Println("sold", art.Sold)
+	fmt.Println("show_in_gallery", art.ShowInGallery)
+
+	// Return updated art row for drag-and-drop updates
+	h.render(w, r, pages.ArtRow(*art, 0), true)
 }
 
 func (h *Handler) uploadImage(w http.ResponseWriter, r *http.Request) {
@@ -169,7 +274,7 @@ func (h *Handler) uploadImage(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 
 	// Upload image
-	url, err := h.ImageUploader.UploadImage(file, header)
+	url, thumbURL, err := h.ImageUploader.UploadImage(file, header)
 	if err != nil {
 		log.Printf("Failed to upload image: %v", err)
 		http.Error(w, "Failed to upload image", http.StatusInternalServerError)
@@ -178,7 +283,7 @@ func (h *Handler) uploadImage(w http.ResponseWriter, r *http.Request) {
 
 	// Return the URL as JSON
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"url": url})
+	json.NewEncoder(w).Encode(map[string]string{"url": url, "thumb_url": thumbURL})
 }
 
 func (h *Handler) createArt(w http.ResponseWriter, r *http.Request) {
@@ -205,16 +310,13 @@ func (h *Handler) createArt(w http.ResponseWriter, r *http.Request) {
 		Year:        r.FormValue("year"),
 		Description: r.FormValue("description"),
 		Sold:        sold,
-		CreatedAt:   r.FormValue("created_at"),
 	}
 
-	log.Println("title", art.Title)
 	if err := h.DB.AddArt(art); err != nil {
 		h.handleError(w, "Failed to create art", http.StatusInternalServerError, err)
 		return
 	}
 
-	// Redirect back to edit page
-	//w.Header().Set("HX-Redirect", "/edit")
+	w.Header().Set("HX-Redirect", "/edit")
 	w.WriteHeader(http.StatusOK)
 }

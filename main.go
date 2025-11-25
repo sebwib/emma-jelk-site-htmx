@@ -16,10 +16,10 @@ import (
 )
 
 var routes = []partial.Route{
-	{Path: "/", Name: "Hem", InSidebar: false},
-	{Path: "/gallery", Name: "Galleri", InSidebar: true},
-	{Path: "/buyart", Name: "Köp konst", InSidebar: true},
-	{Path: "/about", Name: "Om mig", InSidebar: true},
+	{Path: "/", Name: "ref:home_title", InSidebar: false},
+	{Path: "/gallery", Name: "ref:gallery_title", InSidebar: true},
+	{Path: "/buyart", Name: "ref:buy_art_title", InSidebar: true},
+	{Path: "/about", Name: "ref:about_me_title", InSidebar: true},
 }
 
 func main() {
@@ -30,6 +30,8 @@ func main() {
 
 	// Initialize handlers with services
 	r := chi.NewRouter()
+
+	log.Println("v0.0.4")
 
 	db, err := db.New("./db.db")
 	if err != nil {

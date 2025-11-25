@@ -26,7 +26,7 @@ templ ArtGrid(arts []db.Art, page int) {
 			hx-push-url="false"
 		>
 			<img
-				src={ getImgUrl(art.ThumbURL) }
+				src={ getThumbUrl(art.ThumbURL, art.ImgURL) }
 				alt={ art.Title }
 				class="w-full h-[40vh] sm:h-[31vw] object-cover"
 				if i == len(arts) - 1 {
@@ -39,6 +39,17 @@ templ ArtGrid(arts []db.Art, page int) {
 			/>
 		</a>
 	}
+}
+
+func getThumbUrl(thumbURL string, imgURL string) string {
+	url := thumbURL
+	if url == "" {
+		url = imgURL
+	}
+	if strings.Contains(url, "/") {
+		return url
+	}
+	return "/static/upload/" + url
 }
 
 func getImgUrl(url string) string {

@@ -1,9 +1,14 @@
 package services
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"image"
+	"image/jpeg"
+	_ "image/png"
 	"io"
+	"log"
 	"mime/multipart"
 	"os"
 	"path/filepath"
@@ -15,6 +20,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/google/uuid"
+	"github.com/nfnt/resize"
 )
 
 type ImageUploader struct {
@@ -61,30 +67,87 @@ func NewImageUploader() (*ImageUploader, error) {
 	return uploader, nil
 }
 
-func (u *ImageUploader) UploadImage(file multipart.File, header *multipart.FileHeader) (string, error) {
+func resizeImage(data []byte, size uint) ([]byte, error) {
+	log.Println("trying to decode")
+	originalImage, _, err := image.Decode(bytes.NewReader(data))
+	if err != nil {
+		return nil, fmt.Errorf("decode error %w", err)
+	}
+
+	newImage := resize.Resize(size, 0, originalImage, resize.Lanczos3)
+
+	var outData bytes.Buffer
+	err = jpeg.Encode(&outData, newImage, nil)
+	log.Println("encoding")
+
+	if err != nil {
+		return nil, err
+	}
+
+	return outData.Bytes(), nil
+}
+
+func (u *ImageUploader) UploadImage(file multipart.File, header *multipart.FileHeader) (string, string, error) {
 	// Generate unique filename
 	ext := filepath.Ext(header.Filename)
 	filename := fmt.Sprintf("%s-%d%s", uuid.New().String(), time.Now().Unix(), ext)
 
-	if u.useS3 {
-		return u.uploadToS3(file, filename, header)
+	log.Println("read bytes")
+	fileBytes, err := io.ReadAll(file)
+	if err != nil {
+		return "", "", err
 	}
-	return u.uploadToLocal(file, filename)
+
+	log.Println("resizing")
+	thumbFileBytes, err := resizeImage(fileBytes, 600)
+	if err != nil {
+		return "", "", err
+	}
+
+	thumbFileName := fmt.Sprintf("thumb-%s", filename)
+	// replace thumb file extension with .jpg
+	thumbFileName = strings.TrimSuffix(thumbFileName, filepath.Ext(thumbFileName)) + ".jpg"
+
+	if u.useS3 {
+		thumbUploadedFileName, err := u.uploadToS3(thumbFileBytes, thumbFileName, header)
+		if err != nil {
+			return "", "", err
+		}
+
+		uploadedFileName, err := u.uploadToS3(fileBytes, filename, header)
+		if err != nil {
+			return "", "", err
+		}
+		return uploadedFileName, thumbUploadedFileName, nil
+	}
+
+	thumbUploadedFileName, err := u.uploadToLocal(thumbFileBytes, thumbFileName)
+	if err != nil {
+		return "", "", err
+	}
+	uploadedFileName, err := u.uploadToLocal(fileBytes, filename)
+	if err != nil {
+		return "", "", err
+	}
+
+	return uploadedFileName, thumbUploadedFileName, nil
 }
 
-func (u *ImageUploader) uploadToS3(file multipart.File, filename string, header *multipart.FileHeader) (string, error) {
+func (u *ImageUploader) uploadToS3(fileBytes []byte, filename string, header *multipart.FileHeader) (string, error) {
 	// Determine content type
 	contentType := header.Header.Get("Content-Type")
 	if contentType == "" {
 		contentType = "application/octet-stream"
 	}
 
+	log.Println("uploading: ", filename)
+
 	_, err := u.s3Client.PutObject(context.TODO(), &s3.PutObjectInput{
 		Bucket:      aws.String(u.bucketName),
 		Key:         aws.String(filename),
-		Body:        file,
+		Body:        bytes.NewReader(fileBytes),
 		ContentType: aws.String(contentType),
-		ACL:         "public-read",
+		//ACL:         "public-read",
 	})
 	if err != nil {
 		return "", fmt.Errorf("failed to upload to S3: %w", err)
@@ -94,7 +157,9 @@ func (u *ImageUploader) uploadToS3(file multipart.File, filename string, header 
 	return fmt.Sprintf("https://%s.s3.amazonaws.com/%s", u.bucketName, filename), nil
 }
 
-func (u *ImageUploader) uploadToLocal(file multipart.File, filename string) (string, error) {
+func (u *ImageUploader) uploadToLocal(fileBytes []byte, filename string) (string, error) {
+	log.Println("uploadToLocal: ", filename)
+
 	// Create destination file
 	dstPath := filepath.Join(u.localPath, filename)
 	dst, err := os.Create(dstPath)
@@ -104,7 +169,7 @@ func (u *ImageUploader) uploadToLocal(file multipart.File, filename string) (str
 	defer dst.Close()
 
 	// Copy file contents
-	if _, err := io.Copy(dst, file); err != nil {
+	if _, err := dst.Write(fileBytes); err != nil {
 		return "", fmt.Errorf("failed to write file: %w", err)
 	}
 

@@ -13,7 +13,18 @@ func (h *Handler) RegisterAboutRoutes(r chi.Router) {
 }
 
 func (h *Handler) about(w http.ResponseWriter, r *http.Request) {
+	aboutMeTitle, err := h.DB.GetStoredTextByReferenceID("about_me_title")
+	if err != nil {
+		h.handleError(w, "Failed to load about me title", http.StatusInternalServerError, err)
+		return
+	}
+	aboutMeText, err := h.DB.GetStoredTextByReferenceID("about_me_text")
+	if err != nil {
+		h.handleError(w, "Failed to load about me text", http.StatusInternalServerError, err)
+		return
+	}
+
 	// oob update background
 	h.render(w, r, layout.Background(r.URL.Path, true), true)
-	h.render(w, r, pages.About(), false)
+	h.render(w, r, pages.About(aboutMeTitle[0].Content, aboutMeText[0].Content), false)
 }

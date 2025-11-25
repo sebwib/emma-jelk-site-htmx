@@ -46,6 +46,9 @@ func (db *DB) createTables() error {
 	if err := db.createArtTable(); err != nil {
 		return err
 	}
+	if err := db.createStoredTextsTable(); err != nil {
+		return err
+	}
 
 	return nil
 }
