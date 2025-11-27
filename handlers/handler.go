@@ -75,6 +75,12 @@ func (h *Handler) render(w http.ResponseWriter, r *http.Request, content templ.C
 		component = layout.Base(h.getRoutesWithReferences(h.Routes), h.DB, r.URL.Path, content)
 	}
 
+	if r.URL.Path == "/" {
+		w.Header().Set("HX-Trigger", "pageThemeDark")
+	} else {
+		w.Header().Set("HX-Trigger", "pageThemeLight")
+	}
+
 	templ.Handler(component).ServeHTTP(w, r)
 }
 
@@ -86,25 +92,13 @@ func (h *Handler) handleError(w http.ResponseWriter, message string, statusCode 
 	http.Error(w, message, statusCode)
 }
 
-func (h *Handler) handleServerError(w http.ResponseWriter, message string, err error) {
-	h.handleError(w, message, http.StatusInternalServerError, err)
-}
-
-func (h *Handler) handleBadRequest(w http.ResponseWriter, message string) {
-	h.handleError(w, message, http.StatusBadRequest, nil)
-}
-
-func (h *Handler) handleNotFound(w http.ResponseWriter, message string) {
-	h.handleError(w, message, http.StatusNotFound, nil)
-}
-
-func (h *Handler) handleMethodNotAllowed(w http.ResponseWriter) {
-	h.handleError(w, "Method not allowed", http.StatusMethodNotAllowed, nil)
-}
-
 func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 	h.render(w, r, pages.Index(h.getRoutesWithReferences(h.Routes)), false)
-	h.render(w, r, layout.Background(r.URL.Path, true), true)
+
+	// oob update background
+	if h.isHTMX(r) {
+		h.render(w, r, layout.Background(r.URL.Path, true), true)
+	}
 }
 
 func (h *Handler) closeModal(w http.ResponseWriter, r *http.Request) {

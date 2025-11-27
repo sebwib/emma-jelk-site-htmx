@@ -8,11 +8,12 @@ import (
 
 templ Base(routes []partial.Route, db *db.DB, currentPath string, children ...templ.Component) {
 	<!DOCTYPE html>
-	<html lang="en" class="bg-black">
+	<html lang="en">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<title>Emma Jelk</title>
+			<link rel="icon" type="image/x-icon" href="/static/img/favicon.ico"/>
 			<!-- Google Fonts preconnect -->
 			<link rel="preconnect" href="https://fonts.googleapis.com"/>
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
@@ -39,14 +40,40 @@ templ Base(routes []partial.Route, db *db.DB, currentPath string, children ...te
 						}
 					});
 				})();
-    </script>
+    	</script>
 		</head>
-		<body class="min-h-screen flex flex-col transition-all duration-100 ease-out relative">
+		<body class="bg-dark min-h-screen flex flex-col transition-all duration-100 ease-out relative">
 			@Background(currentPath, false)
 			<div id={ id.ContentID } class="z-[1] flex-1 flex flex-col">
 				@Content(routes, db, currentPath, children...)
 			</div>
 			<div id={ id.ModalContainerID }></div>
 		</body>
+		<script>
+			// Helper to swap background classes
+			function setBodyTheme(theme) {
+				var body = document.body;
+				body.classList.remove('bg-dark', 'bg-light');
+				body.classList.add(theme === 'light' ? 'bg-light' : 'bg-dark');
+			}
+
+			// Set correct theme on initial page load as well (optional if server sets class)
+			document.addEventListener('DOMContentLoaded', function () {
+				if (!document.body.classList.contains('bg-light') &&
+						!document.body.classList.contains('bg-dark')) {
+					setBodyTheme('dark');
+				}
+			});
+
+			// HTMX: listen for a custom event fired via HX-Trigger
+			document.addEventListener('pageThemeDark', function (event) {
+				setBodyTheme('dark');
+			});
+
+			// HTMX: listen for a custom event fired via HX-Trigger
+			document.addEventListener('pageThemeLight', function (event) {
+				setBodyTheme('light');
+			});
+		</script>
 	</html>
 }

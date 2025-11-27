@@ -31,9 +31,9 @@ func main() {
 	// Initialize handlers with services
 	r := chi.NewRouter()
 
-	log.Println("v0.0.4")
+	log.Println("v0.0.9")
 
-	db, err := db.New("./db.db")
+	db, err := db.New("./database.db")
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}

@@ -81,7 +81,7 @@ func ArtGrid(arts []db.Art, page int) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		for i, art := range arts {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<a class=\"shadow-lg cursor-pointer hover:scale-[1.01] hover:shadow-lg transition-all duration-400 ease-out\" hx-get=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<a class=\"relative shadow-lg cursor-pointer hover:scale-[1.01] hover:shadow-lg transition-all duration-400 ease-out\" hx-get=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -156,7 +156,17 @@ func ArtGrid(arts []db.Art, page int) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "></a>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "> ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if art.Sold {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div class=\"absolute bottom-0 right-0 flex overflow-hidden w-60 h-60\"><div class=\"sold-banner\"></div></div>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</a>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

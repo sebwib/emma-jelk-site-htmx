@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -43,13 +42,12 @@ func (h *Handler) gallery(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// oob update background
-	h.render(w, r, layout.Background(r.URL.Path, true), true)
-
-	for _, art := range arts {
-		log.Println(art.Title)
-	}
 	h.render(w, r, pages.Gallery(arts, page), page > 1)
+
+	// oob update background
+	if h.isHTMX(r) {
+		h.render(w, r, layout.Background(r.URL.Path, true), true)
+	}
 }
 
 /*

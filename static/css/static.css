@@ -1,3 +1,17 @@
+html, body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body.bg-dark {
+  background-color: #000;
+  overflow: hidden;
+}
+
+body.bg-light {
+  background-color: #fff;
+}
+
 #chat-window p, #chat-window strong, #chat-window i {
   display: inline;
   animation: fadeIn 0.1s ease-in;
@@ -45,4 +59,22 @@ td {
 th {
   padding: 4px;
   text-align: left;
+}
+
+.sold-banner:after {
+  content:"Såld";
+  position: absolute;  
+  right:0;
+  bottom:0;
+  background-color: #737d87;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 40px;
+  width: 250px;
+  display: block;
+  color: white;
+  padding: 2px 0px 0px 0px;
+  display: flex;
+  justify-content: center;
+  transform: rotate(-45deg) translateX(70px) translateY(20px);
 }

@@ -55,7 +55,7 @@ func BuyArt(buyArtTitle string, buyArtText string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</p></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</p><!--\n\t\t\t<h2 class=\"text-2xl font-medium\">Art prints</h2>\n\t\t\t<p class=\"text-center whitespace-pre-line\">\n\t\t\t\tVill du köpa en fin art print av någon av mina tavlor? ...\n\t\t\t</p>\n\t\t\t--></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

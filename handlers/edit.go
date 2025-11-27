@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/sebwib/emma-site-htmx/components/layout"
 	"github.com/sebwib/emma-site-htmx/components/pages"
 	"github.com/sebwib/emma-site-htmx/components/reusable"
 	"github.com/sebwib/emma-site-htmx/db"
@@ -117,7 +118,9 @@ func (h *Handler) resetArtOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// oob update background
-	//h.render(w, r, layout.Background(r.URL.Path, true), true)
+	if h.isHTMX(r) {
+		h.render(w, r, layout.Background(r.URL.Path, true), true)
+	}
 	h.render(w, r, pages.Edit(arts, references), false)
 }
 

@@ -35,19 +35,19 @@ func Base(routes []partial.Route, db *db.DB, currentPath string, children ...tem
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\" class=\"bg-black\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Emma Jelk</title><!-- Google Fonts preconnect --><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"anonymous\"><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap\"><!-- tailwind css --><link href=\"/static/css/tailwind.css\" rel=\"stylesheet\"><!-- static css --><link href=\"/static/css/static.css\" rel=\"stylesheet\"><!-- htmx --><script src=\"/static/js/htmx.min.js\" type=\"text/javascript\"></script><!-- Sidebar state sync --><script>\n\t\t\t\t(function() {\n\t\t\t\t\tconst cookieValue = document.cookie.split('; ').find(row => row.startsWith('sidebar-collapsed='))?.split('=')[1];\n\t\t\t\t\tif (cookieValue) {\n\t\t\t\t\t\tlocalStorage.setItem('sidebar-collapsed', cookieValue);\n\t\t\t\t\t}\n\n\t\t\t\t\twindow.addEventListener('keydown', function(event) {\n\t\t\t\t\t\tif (event.key === 'Escape') {\n\t\t\t\t\t\t\thtmx.ajax(\"GET\", \"/modal/close\", {\n\t\t\t\t\t\t\t\ttarget: \"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Emma Jelk</title><link rel=\"icon\" type=\"image/x-icon\" href=\"/static/img/favicon.ico\"><!-- Google Fonts preconnect --><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"anonymous\"><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap\"><!-- tailwind css --><link href=\"/static/css/tailwind.css\" rel=\"stylesheet\"><!-- static css --><link href=\"/static/css/static.css\" rel=\"stylesheet\"><!-- htmx --><script src=\"/static/js/htmx.min.js\" type=\"text/javascript\"></script><!-- Sidebar state sync --><script>\n\t\t\t\t(function() {\n\t\t\t\t\tconst cookieValue = document.cookie.split('; ').find(row => row.startsWith('sidebar-collapsed='))?.split('=')[1];\n\t\t\t\t\tif (cookieValue) {\n\t\t\t\t\t\tlocalStorage.setItem('sidebar-collapsed', cookieValue);\n\t\t\t\t\t}\n\n\t\t\t\t\twindow.addEventListener('keydown', function(event) {\n\t\t\t\t\t\tif (event.key === 'Escape') {\n\t\t\t\t\t\t\thtmx.ajax(\"GET\", \"/modal/close\", {\n\t\t\t\t\t\t\t\ttarget: \"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Var2, templ_7745c5c3_Err := templruntime.ScriptContentInsideStringLiteral(id.Selector(id.ModalContainerID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 37, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 38, Col: 52}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\",\n\t\t\t\t\t\t\t});\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t})();\n    </script></head><body class=\"min-h-screen flex flex-col transition-all duration-100 ease-out relative\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\",\n\t\t\t\t\t\t\t});\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t})();\n    \t</script></head><body class=\"bg-dark min-h-screen flex flex-col transition-all duration-100 ease-out relative\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -62,7 +62,7 @@ func Base(routes []partial.Route, db *db.DB, currentPath string, children ...tem
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(id.ContentID)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 46, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 47, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -83,13 +83,13 @@ func Base(routes []partial.Route, db *db.DB, currentPath string, children ...tem
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(id.ModalContainerID)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 49, Col: 32}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 50, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"></div></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\"></div></body><script>\n\t\t\t// Helper to swap background classes\n\t\t\tfunction setBodyTheme(theme) {\n\t\t\t\tvar body = document.body;\n\t\t\t\tbody.classList.remove('bg-dark', 'bg-light');\n\t\t\t\tbody.classList.add(theme === 'light' ? 'bg-light' : 'bg-dark');\n\t\t\t}\n\n\t\t\t// Set correct theme on initial page load as well (optional if server sets class)\n\t\t\tdocument.addEventListener('DOMContentLoaded', function () {\n\t\t\t\tif (!document.body.classList.contains('bg-light') &&\n\t\t\t\t\t\t!document.body.classList.contains('bg-dark')) {\n\t\t\t\t\tsetBodyTheme('dark');\n\t\t\t\t}\n\t\t\t});\n\n\t\t\t// HTMX: listen for a custom event fired via HX-Trigger\n\t\t\tdocument.addEventListener('pageThemeDark', function (event) {\n\t\t\t\tsetBodyTheme('dark');\n\t\t\t});\n\n\t\t\t// HTMX: listen for a custom event fired via HX-Trigger\n\t\t\tdocument.addEventListener('pageThemeLight', function (event) {\n\t\t\t\tsetBodyTheme('light');\n\t\t\t});\n\t\t</script></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

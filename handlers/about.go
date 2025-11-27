@@ -24,7 +24,10 @@ func (h *Handler) about(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// oob update background
-	h.render(w, r, layout.Background(r.URL.Path, true), true)
 	h.render(w, r, pages.About(aboutMeTitle[0].Content, aboutMeText[0].Content), false)
+
+	// oob update background
+	if h.isHTMX(r) {
+		h.render(w, r, layout.Background(r.URL.Path, true), true)
+	}
 }

@@ -20,7 +20,7 @@ templ Gallery(arts []db.Art, page int) {
 templ ArtGrid(arts []db.Art, page int) {
 	for i, art := range arts {
 		<a
-			class="shadow-lg cursor-pointer hover:scale-[1.01] hover:shadow-lg transition-all duration-400 ease-out"
+			class="relative shadow-lg cursor-pointer hover:scale-[1.01] hover:shadow-lg transition-all duration-400 ease-out"
 			hx-get={ "/gallery/" + art.Id }
 			hx-target={ id.Selector(id.ModalContainerID) }
 			hx-push-url="false"
@@ -37,6 +37,11 @@ templ ArtGrid(arts []db.Art, page int) {
 					hx-push-url="false"
 				}
 			/>
+			if art.Sold {
+				<div class="absolute bottom-0 right-0 flex overflow-hidden w-60 h-60">
+					<div class="sold-banner"></div>
+				</div>
+			}
 		</a>
 	}
 }

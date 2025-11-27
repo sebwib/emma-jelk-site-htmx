@@ -91,7 +91,7 @@ templ Edit(arts []db.Art, references []db.StoredText) {
 					hx-target={ id.Selector(id.ModalContainerID) }
 					hx-swap="innerHTML"
 				>
-					Change { ref.ReferenceID } title
+					Change { ref.ReferenceID }
 				</button>
 			}
 		</div>
@@ -168,7 +168,6 @@ templ Edit(arts []db.Art, references []db.StoredText) {
 				const prevRow = rows[draggedIndex - 1];
 				const nextRow = rows[draggedIndex + 1];
 
-				console.log({prevRow, nextRow})
 				if (!prevRow && !nextRow) {
 					// Only one row
 					newOrdering = 1.0;

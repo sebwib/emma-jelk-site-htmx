@@ -24,7 +24,10 @@ func (h *Handler) buyArt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// oob update background
-	h.render(w, r, layout.Background(r.URL.Path, true), true)
 	h.render(w, r, pages.BuyArt(buyArtTitle[0].Content, buyArtText[0].Content), false)
+
+	// oob update background
+	if h.isHTMX(r) {
+		h.render(w, r, layout.Background(r.URL.Path, true), true)
+	}
 }
