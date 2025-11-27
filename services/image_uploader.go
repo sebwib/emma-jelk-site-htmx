@@ -68,7 +68,6 @@ func NewImageUploader() (*ImageUploader, error) {
 }
 
 func resizeImage(data []byte, size uint) ([]byte, error) {
-	log.Println("trying to decode")
 	originalImage, _, err := image.Decode(bytes.NewReader(data))
 	if err != nil {
 		return nil, fmt.Errorf("decode error %w", err)
@@ -77,8 +76,9 @@ func resizeImage(data []byte, size uint) ([]byte, error) {
 	newImage := resize.Resize(size, 0, originalImage, resize.Lanczos3)
 
 	var outData bytes.Buffer
-	err = jpeg.Encode(&outData, newImage, nil)
-	log.Println("encoding")
+	err = jpeg.Encode(&outData, newImage, &jpeg.Options{
+		Quality: 85,
+	})
 
 	if err != nil {
 		return nil, err
@@ -99,7 +99,7 @@ func (u *ImageUploader) UploadImage(file multipart.File, header *multipart.FileH
 	}
 
 	log.Println("resizing")
-	thumbFileBytes, err := resizeImage(fileBytes, 600)
+	thumbFileBytes, err := resizeImage(fileBytes, 800)
 	if err != nil {
 		return "", "", err
 	}

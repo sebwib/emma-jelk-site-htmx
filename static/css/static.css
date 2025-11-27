@@ -5,7 +5,11 @@ html, body {
 
 body.bg-dark {
   background-color: #000;
-  overflow: hidden;
+  position: relative;
+}
+
+.bottomgradient {
+	background: linear-gradient(0deg,#00240b00,#000 0%,#0000 41%,#0000);
 }
 
 body.bg-light {

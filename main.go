@@ -64,6 +64,7 @@ func registerRoutes(h *handlers.Handler, r chi.Router, sessionStore *authmw.Sess
 	h.RegisterGalleryRoutes(r)
 	h.RegisterBuyArtRoutes(r)
 	h.RegisterAboutRoutes(r)
+	h.RegisterAPIRoutes(r)
 	h.RegisterAuthRoutes(r, sessionStore)
 	h.RegisterEditRoutes(r, sessionStore)
 }

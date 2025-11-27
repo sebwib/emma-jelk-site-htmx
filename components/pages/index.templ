@@ -7,8 +7,7 @@ import (
 )
 
 templ Index(routes []partial.Route) {
-	{{ gradient := "linear-gradient(0deg,#00240b00,#000 0%,#0000 41%,#0000)" }}
-	<div class="flex-1 flex flex-col justify-end" style={ "background:" + gradient }>
+	<div class="bottomgradient flex-1 flex flex-col justify-end fixed top-0 left-0 right-0 bottom-0">
 		<div class="text-white p-10">
 			<div class="mb-8">
 				for _, route := range routes {
