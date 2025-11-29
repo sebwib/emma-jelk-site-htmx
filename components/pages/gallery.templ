@@ -20,7 +20,7 @@ templ Gallery(arts []db.Art, page int) {
 templ ArtGrid(arts []db.Art, page int) {
 	for i, art := range arts {
 		<a
-			class="relative shadow-lg cursor-pointer hover:scale-[1.01] hover:shadow-lg transition-all duration-400 ease-out"
+			class="relative shadow-lg cursor-pointer hover:scale-[1.04] hover:shadow-2xl transition-all duration-400 ease-out"
 			hx-get={ "/gallery/" + art.Id }
 			hx-target={ id.Selector(id.ModalContainerID) }
 			hx-push-url="false"

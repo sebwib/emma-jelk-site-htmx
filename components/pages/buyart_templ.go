@@ -29,7 +29,7 @@ func BuyArt(buyArtTitle string, buyArtText string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div><div class=\"max-w-4xl mx-auto p-6 gap-6 flex flex-col items-center\"><img class=\"max-h-[60vh] h-[60vh] w-[70vw] object-cover\" src=\"/static/upload/pic_on_wall.jpg\" alt=\"Buy Art\" class=\"w-full\"><h2 class=\"text-2xl font-medium\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div><div class=\"max-w-4xl mx-auto p-6 gap-6 flex flex-col items-center\"><img class=\"w-full md:w-auto md:max-w-full max-h-[60vh] object-cover\" src=\"/static/upload/pic_on_wall.jpg\" alt=\"Buy Art\" class=\"w-full\"><h2 class=\"text-2xl font-medium\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
