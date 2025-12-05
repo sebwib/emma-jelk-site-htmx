@@ -1,10 +1,13 @@
 package partial
 
-import "github.com/sebwib/emma-site-htmx/components/reusable"
-import "github.com/sebwib/emma-site-htmx/components/id"
+import (
+	"github.com/sebwib/emma-site-htmx/components/id"
+	"github.com/sebwib/emma-site-htmx/components/reusable"
+	"github.com/sebwib/emma-site-htmx/services"
+)
 
-templ Header(routes []Route, currentPath string) {
-	<header class="sticky top-0 z-50">
+templ Header(routes []Route, cartItems []services.CartItem, currentPath string) {
+	<header class={"sticky top-0 z-50", gradientClass(currentPath)}>
 		<nav class="px-8 py-8 w-full">
 			<div class="flex items-center justify-between">
 				<div class="flex items-center gap-2">
@@ -18,7 +21,7 @@ templ Header(routes []Route, currentPath string) {
 					</a>
 				</div>
 				<div id={ id.HeaderNavID }>
-					<div class="hidden sm:flex gap-4">
+					<div class="hidden sm:flex gap-4" id={ id.HeaderDesktopNavID }>
 						for _, route := range routes {
 							<a
 								class={ templ.KV(textColor(currentPath), route.Path != currentPath), templ.KV(selectedTextColor(currentPath), route.Path == currentPath ), "hover:text-gray-400 font-medium" }
@@ -33,10 +36,12 @@ templ Header(routes []Route, currentPath string) {
 						<a class="text-2xl" target="_blank" href="https://www.instagram.com/emmajelkart/">
 							@reusable.Instagram(svgColor(currentPath))
 						</a>
+						@CartSymbol(cartItems, false, id.CartSymbolModeDesktop)
 					</div>
 					<div class="flex sm:hidden">
-						<button>
+						<button class="relative">
 							@reusable.Hamburger(svgColor(currentPath))
+							@CartSymbol(cartItems, false, id.CartSymbolModeCount)
 						</button>
 						<div id={ id.HeaderNavMenuID } class="fixed hidden top-0 left-0 w-full h-full bg-black bg-opacity-90 flex flex-col items-center justify-center gap-8 text-white text-2xl animate-fadeIn">
 							for _, route := range routes {
@@ -53,6 +58,7 @@ templ Header(routes []Route, currentPath string) {
 							<a class="text-4xl" target="_blank" href="https://www.instagram.com/emmajelkart/">
 								@reusable.Instagram("white")
 							</a>
+							@CartSymbol(cartItems, false, id.CartSymbolModeMobile)
 						</div>
 						<script>
 							(function() {
@@ -79,7 +85,7 @@ templ Header(routes []Route, currentPath string) {
 		</nav>
 		<script>
 			(function() {
-				const nav = document.getElementById({{ id.HeaderNavID }});
+				const nav = document.getElementById({{ id.HeaderDesktopNavID }});
 				if (nav) {
 					const setOpacityFromScroll = (scrollY) => {
 						const maxScroll = 300;
@@ -98,6 +104,13 @@ templ Header(routes []Route, currentPath string) {
 			})();		
 		</script>
 	</header>
+}
+
+func gradientClass(path string) string {
+	if path == "/" {
+		return ""
+	}
+	return "bg-gradient-to-b from-white to-transparent"
 }
 
 func headerTextColor(path string) string {

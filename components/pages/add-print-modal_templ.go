@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-func AddArtModal() templ.Component {
+func AddPrintModal() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -41,20 +41,20 @@ func AddArtModal() templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(id.EditArtModalInner)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/add-art-modal.templ`, Line: 10, Col: 32}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/add-print-modal.templ`, Line: 10, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto\"><h2 class=\"text-2xl mb-4\">Add New Art</h2><form hx-post=\"/edit/art\" class=\"flex flex-col gap-4\"><label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Title *</span> <input type=\"text\" name=\"title\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Medium</span> <input type=\"text\" name=\"medium\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Width (cm)</span> <input type=\"number\" name=\"width\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Height (cm)</span> <input type=\"number\" name=\"height\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Year</span> <input type=\"text\" name=\"year\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Description</span> <textarea name=\"description\" rows=\"3\" class=\"border p-2 rounded\"></textarea></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Main Image *</span> <input type=\"file\" id=\"main-image\" accept=\"image/*\" class=\"border p-2 rounded\"> <input type=\"hidden\" name=\"img_url\" id=\"img-url-input\"> <input type=\"hidden\" name=\"thumb_url\" id=\"thumb-url-input\"><div id=\"main-image-preview\" class=\"mt-2\"></div></label> <label class=\"flex items-center gap-2\"><input type=\"checkbox\" name=\"sold\" value=\"true\" class=\"rounded\"> <span class=\"font-medium\">Sold</span></label> <input type=\"hidden\" name=\"created_at\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto\"><h2 class=\"text-2xl mb-4\">Add New Print</h2><form hx-post=\"/edit/print\" class=\"flex flex-col gap-4\"><label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Title *</span> <input type=\"text\" name=\"title\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Medium</span> <input type=\"text\" name=\"medium\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Width (cm)</span> <input type=\"number\" name=\"width\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Height (cm)</span> <input type=\"number\" name=\"height\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Year</span> <input type=\"text\" name=\"year\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Description</span> <textarea name=\"description\" rows=\"3\" class=\"border p-2 rounded\"></textarea></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Price</span> <input type=\"number\" name=\"price\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Quantity left</span> <input type=\"number\" name=\"quantity_left\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Main Image *</span> <input type=\"file\" id=\"main-image\" accept=\"image/*\" class=\"border p-2 rounded\"> <input type=\"hidden\" name=\"img_url\" id=\"img-url-input\"> <input type=\"hidden\" name=\"thumb_url\" id=\"thumb-url-input\"><div id=\"main-image-preview\" class=\"mt-2\"></div></label> <label class=\"flex items-center gap-2\"><input type=\"checkbox\" name=\"show_in_store\" value=\"true\" class=\"rounded\"> <span class=\"font-medium\">Show in store</span></label> <input type=\"hidden\" name=\"created_at\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(time.Now().Format(time.RFC3339))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/add-art-modal.templ`, Line: 56, Col: 82}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/add-print-modal.templ`, Line: 64, Col: 82}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -67,7 +67,7 @@ func AddArtModal() templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/add-art-modal.templ`, Line: 61, Col: 50}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/add-print-modal.templ`, Line: 69, Col: 50}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -79,7 +79,7 @@ func AddArtModal() templ.Component {
 		}
 		templ_7745c5c3_Var5, templ_7745c5c3_Err := templruntime.ScriptContentInsideStringLiteral(id.EditArtModalInner)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/add-art-modal.templ`, Line: 117, Col: 71}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/add-print-modal.templ`, Line: 125, Col: 71}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {

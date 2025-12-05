@@ -305,7 +305,7 @@ func ArtRow(art db.Art, i int) templ.Component {
 	})
 }
 
-func Edit(arts []db.Art, references []db.StoredText) templ.Component {
+func PrintRow(print db.Print, i int) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -326,69 +326,333 @@ func Edit(arts []db.Art, references []db.StoredText) templ.Component {
 			templ_7745c5c3_Var22 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<div class=\"flex flex-col p-6 gap-6 z-[4]\"><h2 class=\"text-2xl\">Static content</h2><div class=\"flex gap-2 flex-wrap\">")
+		encodedID := "ID-" + print.Id
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "<tr draggable=\"true\" data-id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for _, ref := range references {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "<button class=\"rounded whitespace-nowrap bg-blue-500 text-white px-3 py-1 hover:bg-blue-600 transition-colors\" hx-get=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var23 string
-			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs("/edit/storedtext/modal/" + ref.ReferenceID)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 90, Col: 57}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "\" hx-target=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var24 string
-			templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 91, Col: 49}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "\" hx-swap=\"innerHTML\">Change ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var25 string
-			templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(ref.ReferenceID)
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 94, Col: 29}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "</button>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
+		var templ_7745c5c3_Var23 string
+		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(print.Id)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 87, Col: 20}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "</div><div class=\"flex justify-between items-center\"><h2 class=\"text-2xl\">Art</h2><button hx-get=\"/edit/art/modal/new\" hx-target=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "\" data-ordering=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var24 string
+		templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.6f", print.Ordering))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 88, Col: 53}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "\" data-index=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var25 string
+		templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(i))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 89, Col: 30}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "\" class=\"border-b hover:bg-gray-100 cursor-move\"><td class=\"p-2\">⋮⋮</td><td class=\"p-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var26 string
-		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
+		templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(print.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 102, Col: 48}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 94, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "\" hx-swap=\"innerHTML\" class=\"bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors\">+ Add New Art</button></div><table id=\"art-table\" class=\"border-collapse\"><thead><tr><th class=\"p-2 text-left\">Drag</th><th class=\"p-2 text-left\">Title</th><th class=\"p-2 text-left\">Width</th><th class=\"p-2 text-left\">Height</th><th class=\"p-2 text-left\">Image URL</th><th class=\"p-2 text-left\">Ordering</th><th class=\"p-2 text-left\">Sold?</th><th class=\"p-2 text-left\">Show?</th><th class=\"p-2 text-left\"></th></tr></thead> <tbody id=\"art-tbody\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "</td><td class=\"p-2\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var27 string
+		templ_7745c5c3_Var27, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(print.Width))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 97, Col: 30}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var27))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "</td><td class=\"p-2\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var28 string
+		templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(print.Height))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 100, Col: 31}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</td><td class=\"p-2\"><a target=\"_blank\" href=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var29 templ.SafeURL
+		templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.JoinURLErrs(templ.URL(getImgUrl(print.ImgURL)))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 103, Col: 63}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var29))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "\" class=\"text-blue-600 hover:underline\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var30 string
+		templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(print.ImgURL)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 104, Col: 18}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var30))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, "</a></td><td class=\"p-2\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var31 string
+		templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.2f", print.Price))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 108, Col: 37}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 31, "</td><td class=\"p-2\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var32 string
+		templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(print.QuantityLeft))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 111, Col: 37}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var32))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 32, "</td><td class=\"ordering p-2 text-sm text-gray-500\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var33 string
+		templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.6f", print.Ordering))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 114, Col: 40}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var33))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 33, "</td><td class=\"p-2\"><form hx-patch=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var34 string
+		templ_7745c5c3_Var34, templ_7745c5c3_Err = templ.JoinStringErrs("/edit/print/" + print.Id + "/show_in_store")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 118, Col: 59}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var34))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 34, "\" hx-target=\"closest tr\" hx-swap=\"outerHTML\" hx-push-url=\"false\" hx-trigger=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var35 string
+		templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.JoinStringErrs("change from:" + id.Selector(encodedID+"show"))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 122, Col: 63}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var35))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 35, "\"><input id=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var36 string
+		templ_7745c5c3_Var36, templ_7745c5c3_Err = templ.JoinStringErrs(encodedID + "show")
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 124, Col: 34}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var36))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 36, "\" onpointerdown=\"event.stopPropagation(); event.stopImmediatePropagation()\" draggable=\"false\" name=\"show_in_store\" type=\"checkbox\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var37 string
+		templ_7745c5c3_Var37, templ_7745c5c3_Err = templ.JoinStringErrs(boolToCheckedString(print.ShowInStore))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 124, Col: 206}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(` ` + templ_7745c5c3_Var37))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 37, "></form></td><td><div class=\"flex gap-2\"><button class=\"rounded bg-blue-500 text-white px-3 py-1 hover:bg-blue-600 transition-colors\" hx-get=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var38 string
+		templ_7745c5c3_Var38, templ_7745c5c3_Err = templ.JoinStringErrs("/edit/print/modal/" + print.Id)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 131, Col: 45}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var38))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 38, "\" hx-target=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var39 string
+		templ_7745c5c3_Var39, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 132, Col: 49}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var39))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "\" hx-swap=\"innerHTML\">Edit</button> <button class=\"rounded bg-red-500 text-white px-3 py-1 hover:bg-red-600 transition-colors\" hx-delete=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var40 string
+		templ_7745c5c3_Var40, templ_7745c5c3_Err = templ.JoinStringErrs("/edit/print/" + print.Id)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 139, Col: 42}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var40))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 40, "\" hx-target=\"closest tr\" hx-swap=\"outerHTML\" hx-confirm=\"Are you sure you want to delete this print?\">Delete</button></div></td></tr>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func Edit(arts []db.Art, prints []db.Print, references []db.StoredText) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var41 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var41 == nil {
+			templ_7745c5c3_Var41 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "<div class=\"flex flex-col p-6 gap-6 z-[4]\"><h2 class=\"text-2xl\">Static content</h2><div class=\"flex gap-2 flex-wrap\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for _, ref := range references {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 42, "<button class=\"rounded whitespace-nowrap bg-blue-500 text-white px-3 py-1 hover:bg-blue-600 transition-colors\" hx-get=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var42 string
+			templ_7745c5c3_Var42, templ_7745c5c3_Err = templ.JoinStringErrs("/edit/storedtext/modal/" + ref.ReferenceID)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 158, Col: 57}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var42))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 43, "\" hx-target=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var43 string
+			templ_7745c5c3_Var43, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 159, Col: 49}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var43))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 44, "\" hx-swap=\"innerHTML\">Change ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var44 string
+			templ_7745c5c3_Var44, templ_7745c5c3_Err = templ.JoinStringErrs(ref.ReferenceID)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 162, Col: 29}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var44))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 45, "</button>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 46, "</div><div class=\"flex justify-between items-center\"><h2 class=\"text-2xl\">Art</h2><button hx-get=\"/edit/art/modal/new\" hx-target=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var45 string
+		templ_7745c5c3_Var45, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 170, Col: 48}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var45))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 47, "\" hx-swap=\"innerHTML\" class=\"bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors\">+ Add New Art</button></div><table id=\"art-table\" class=\"border-collapse\"><thead><tr><th class=\"p-2 text-left\">Drag</th><th class=\"p-2 text-left\">Title</th><th class=\"p-2 text-left\">Width</th><th class=\"p-2 text-left\">Height</th><th class=\"p-2 text-left\">Image URL</th><th class=\"p-2 text-left\">Ordering</th><th class=\"p-2 text-left\">Sold?</th><th class=\"p-2 text-left\">Show?</th><th class=\"p-2 text-left\"></th></tr></thead> <tbody id=\"art-tbody\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -398,7 +662,30 @@ func Edit(arts []db.Art, references []db.StoredText) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "</tbody></table></div><script>\n\t\t(function() {\n\t\t\tconst tbody = document.getElementById('art-tbody');\n\t\t\tlet draggedElement = null;\n\n\t\t\ttbody.addEventListener('dragstart', function(e) {\n\t\t\t\tif (e.target.tagName === 'TR') {\n\t\t\t\t\tdraggedElement = e.target;\n\t\t\t\t\te.target.style.opacity = '0.4';\n\t\t\t\t}\n\t\t\t});\n\n\t\t\ttbody.addEventListener('dragend', function(e) {\n\t\t\t\tif (e.target.tagName === 'TR') {\n\t\t\t\t\te.target.style.opacity = '1';\n\t\t\t\t}\n\t\t\t});\n\n\t\t\ttbody.addEventListener('dragover', function(e) {\n\t\t\t\te.preventDefault();\n\t\t\t\tconst afterElement = getDragAfterElement(tbody, e.clientY);\n\t\t\t\tif (afterElement == null) {\n\t\t\t\t\ttbody.appendChild(draggedElement);\n\t\t\t\t} else {\n\t\t\t\t\ttbody.insertBefore(draggedElement, afterElement);\n\t\t\t\t}\n\t\t\t});\n\n\t\t\ttbody.addEventListener('drop', function(e) {\n\t\t\t\te.preventDefault();\n\t\t\t\tif (!draggedElement) return;\n\n\t\t\t\tconst draggedId = draggedElement.dataset.id;\n\t\t\t\tconst rows = Array.from(tbody.querySelectorAll('tr'));\n\t\t\t\tconst draggedIndex = rows.indexOf(draggedElement);\n\n\t\t\t\t// Calculate new ordering\n\t\t\t\tlet newOrdering;\n\t\t\t\tconst prevRow = rows[draggedIndex - 1];\n\t\t\t\tconst nextRow = rows[draggedIndex + 1];\n\n\t\t\t\tif (!prevRow && !nextRow) {\n\t\t\t\t\t// Only one row\n\t\t\t\t\tnewOrdering = 1.0;\n\t\t\t\t} else if (!prevRow) {\n\t\t\t\t\t// First position\n\t\t\t\t\tconst nextOrdering = parseFloat(nextRow.dataset.ordering);\n\t\t\t\t\tnewOrdering = nextOrdering + 1.0;\n\t\t\t\t} else if (!nextRow) {\n\t\t\t\t\t// Last position\n\t\t\t\t\tconst prevOrdering = parseFloat(prevRow.dataset.ordering);\n\t\t\t\t\tnewOrdering = prevOrdering - 1.0;\n\t\t\t\t} else {\n\t\t\t\t\t// Between two rows\n\t\t\t\t\tconst prevOrdering = parseFloat(prevRow.dataset.ordering);\n\t\t\t\t\tconst nextOrdering = parseFloat(nextRow.dataset.ordering);\n\t\t\t\t\tnewOrdering = (prevOrdering + nextOrdering) / 2.0;\n\t\t\t\t}\n\n\t\t\t\t// Update the data attribute\n\t\t\t\tdraggedElement.dataset.ordering = newOrdering.toFixed(6);\n\n\t\t\t\tconst draggedMemory = draggedElement\n\n\t\t\t\t// Send PATCH request\n\t\t\t\tfetch(`/edit/art/${draggedId}`, {\n\t\t\t\t\tmethod: 'PATCH',\n\t\t\t\t\theaders: {\n\t\t\t\t\t\t'Content-Type': 'application/json',\n\t\t\t\t\t},\n\t\t\t\t\tbody: JSON.stringify({\n\t\t\t\t\t\tordering: newOrdering\n\t\t\t\t\t})\n\t\t\t\t})\n\t\t\t\t.then(response => {\n\t\t\t\t\tif (!response.ok) {\n\t\t\t\t\t\tconsole.error('Failed to update ordering');\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Update the displayed ordering value\n\t\t\t\t\t\tconst orderingCell = draggedMemory?.querySelector('.ordering');\n\t\t\t\t\t\tif (orderingCell) {\n\t\t\t\t\t\t\torderingCell.textContent = newOrdering.toFixed(6);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t})\n\t\t\t\t.catch(error => {\n\t\t\t\t\tconsole.error('Error updating ordering:', error);\n\t\t\t\t});\n\n\t\t\t\tdraggedElement = null;\n\t\t\t});\n\n\t\t\tfunction getDragAfterElement(container, y) {\n\t\t\t\tconst draggableElements = [...container.querySelectorAll('tr:not(.dragging)')];\n\n\t\t\t\treturn draggableElements.reduce((closest, child) => {\n\t\t\t\t\tconst box = child.getBoundingClientRect();\n\t\t\t\t\tconst offset = y - box.top - box.height / 2;\n\n\t\t\t\t\tif (offset < 0 && offset > closest.offset) {\n\t\t\t\t\t\treturn { offset: offset, element: child };\n\t\t\t\t\t} else {\n\t\t\t\t\t\treturn closest;\n\t\t\t\t\t}\n\t\t\t\t}, { offset: Number.NEGATIVE_INFINITY }).element;\n\t\t\t}\n\t\t})();\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 48, "</tbody></table><div class=\"flex justify-between items-center\"><h2 class=\"text-2xl\">Prints</h2><button hx-get=\"/edit/print/modal/new\" hx-target=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var46 string
+		templ_7745c5c3_Var46, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit.templ`, Line: 201, Col: 48}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var46))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 49, "\" hx-swap=\"innerHTML\" class=\"bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors\">+ Add New Print</button></div><table id=\"art-table\" class=\"border-collapse\"><thead><tr><th class=\"p-2 text-left\">Drag</th><th class=\"p-2 text-left\">Title</th><th class=\"p-2 text-left\">Width</th><th class=\"p-2 text-left\">Height</th><th class=\"p-2 text-left\">Image URL</th><th class=\"p-2 text-left\">Price</th><th class=\"p-2 text-left\">Quantity left</th><th class=\"p-2 text-left\">Ordering</th><th class=\"p-2 text-left\">Show?</th><th class=\"p-2 text-left\"></th></tr></thead> <tbody id=\"print-tbody\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		for i, print := range prints {
+			templ_7745c5c3_Err = PrintRow(print, i).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 50, "</tbody></table></div><script>\n\t\t(function() {\n\t\t\tconst enableDragging = (id, type) => {\n\t\t\t\tconst tbody = document.getElementById(id);\n\t\t\t\tlet draggedElement = null;\n\n\t\t\t\ttbody.addEventListener('dragstart', function(e) {\n\t\t\t\t\tif (e.target.tagName === 'TR') {\n\t\t\t\t\t\tdraggedElement = e.target;\n\t\t\t\t\t\te.target.style.opacity = '0.4';\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\ttbody.addEventListener('dragend', function(e) {\n\t\t\t\t\tif (e.target.tagName === 'TR') {\n\t\t\t\t\t\te.target.style.opacity = '1';\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\ttbody.addEventListener('dragover', function(e) {\n\t\t\t\t\te.preventDefault();\n\t\t\t\t\tconst afterElement = getDragAfterElement(tbody, e.clientY);\n\t\t\t\t\tif (afterElement == null) {\n\t\t\t\t\t\ttbody.appendChild(draggedElement);\n\t\t\t\t\t} else {\n\t\t\t\t\t\ttbody.insertBefore(draggedElement, afterElement);\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\ttbody.addEventListener('drop', function(e) {\n\t\t\t\t\te.preventDefault();\n\t\t\t\t\tif (!draggedElement) return;\n\n\t\t\t\t\tconst draggedId = draggedElement.dataset.id;\n\t\t\t\t\tconst rows = Array.from(tbody.querySelectorAll('tr'));\n\t\t\t\t\tconst draggedIndex = rows.indexOf(draggedElement);\n\n\t\t\t\t\t// Calculate new ordering\n\t\t\t\t\tlet newOrdering;\n\t\t\t\t\tconst prevRow = rows[draggedIndex - 1];\n\t\t\t\t\tconst nextRow = rows[draggedIndex + 1];\n\n\t\t\t\t\tif (!prevRow && !nextRow) {\n\t\t\t\t\t\t// Only one row\n\t\t\t\t\t\tnewOrdering = 1.0;\n\t\t\t\t\t} else if (!prevRow) {\n\t\t\t\t\t\t// First position\n\t\t\t\t\t\tconst nextOrdering = parseFloat(nextRow.dataset.ordering);\n\t\t\t\t\t\tnewOrdering = nextOrdering + 1.0;\n\t\t\t\t\t} else if (!nextRow) {\n\t\t\t\t\t\t// Last position\n\t\t\t\t\t\tconst prevOrdering = parseFloat(prevRow.dataset.ordering);\n\t\t\t\t\t\tnewOrdering = prevOrdering - 1.0;\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// Between two rows\n\t\t\t\t\t\tconst prevOrdering = parseFloat(prevRow.dataset.ordering);\n\t\t\t\t\t\tconst nextOrdering = parseFloat(nextRow.dataset.ordering);\n\t\t\t\t\t\tnewOrdering = (prevOrdering + nextOrdering) / 2.0;\n\t\t\t\t\t}\n\n\t\t\t\t\t// Update the data attribute\n\t\t\t\t\tdraggedElement.dataset.ordering = newOrdering.toFixed(6);\n\n\t\t\t\t\tconst draggedMemory = draggedElement\n\n\t\t\t\t\t// Send PATCH request\n\t\t\t\t\tfetch(`/edit/${type}/${draggedId}`, {\n\t\t\t\t\t\tmethod: 'PATCH',\n\t\t\t\t\t\theaders: {\n\t\t\t\t\t\t\t'Content-Type': 'application/json',\n\t\t\t\t\t\t},\n\t\t\t\t\t\tbody: JSON.stringify({\n\t\t\t\t\t\t\tordering: newOrdering\n\t\t\t\t\t\t})\n\t\t\t\t\t})\n\t\t\t\t\t.then(response => {\n\t\t\t\t\t\tif (!response.ok) {\n\t\t\t\t\t\t\tconsole.error('Failed to update ordering');\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t// Update the displayed ordering value\n\t\t\t\t\t\t\tconst orderingCell = draggedMemory?.querySelector('.ordering');\n\t\t\t\t\t\t\tif (orderingCell) {\n\t\t\t\t\t\t\t\torderingCell.textContent = newOrdering.toFixed(6);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t})\n\t\t\t\t\t.catch(error => {\n\t\t\t\t\t\tconsole.error('Error updating ordering:', error);\n\t\t\t\t\t});\n\n\t\t\t\t\tdraggedElement = null;\n\t\t\t\t});\n\n\t\t\t\tfunction getDragAfterElement(container, y) {\n\t\t\t\t\tconst draggableElements = [...container.querySelectorAll('tr:not(.dragging)')];\n\n\t\t\t\t\treturn draggableElements.reduce((closest, child) => {\n\t\t\t\t\t\tconst box = child.getBoundingClientRect();\n\t\t\t\t\t\tconst offset = y - box.top - box.height / 2;\n\n\t\t\t\t\t\tif (offset < 0 && offset > closest.offset) {\n\t\t\t\t\t\t\treturn { offset: offset, element: child };\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\treturn closest;\n\t\t\t\t\t\t}\n\t\t\t\t\t}, { offset: Number.NEGATIVE_INFINITY }).element;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tenableDragging('art-tbody', 'art');\n\t\t\tenableDragging('print-tbody', 'print');\n\t\t})();\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

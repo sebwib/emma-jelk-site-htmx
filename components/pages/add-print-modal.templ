@@ -5,12 +5,12 @@ import (
 	"time"
 )
 
-templ AddArtModal() {
+templ AddPrintModal() {
 	<div class="fixed z-[10] top-0 left-0 w-full h-full gap-4 flex flex-col items-center justify-center bg-black bg-opacity-95 p-4 animate-fadeIn">
 		<div id={ id.EditArtModalInner } class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-			<h2 class="text-2xl mb-4">Add New Art</h2>
+			<h2 class="text-2xl mb-4">Add New Print</h2>
 			<form
-				hx-post="/edit/art"
+				hx-post="/edit/print"
 				class="flex flex-col gap-4"
 			>
 				<label class="flex flex-col">
@@ -38,6 +38,14 @@ templ AddArtModal() {
 					<textarea name="description" rows="3" class="border p-2 rounded"></textarea>
 				</label>
 				<label class="flex flex-col">
+					<span class="mb-1 font-medium">Price</span>
+					<input type="number" name="price" class="border p-2 rounded"/>
+				</label>
+				<label class="flex flex-col">
+					<span class="mb-1 font-medium">Quantity left</span>
+					<input type="number" name="quantity_left" class="border p-2 rounded"/>
+				</label>
+				<label class="flex flex-col">
 					<span class="mb-1 font-medium">Main Image *</span>
 					<input
 						type="file"
@@ -50,8 +58,8 @@ templ AddArtModal() {
 					<div id="main-image-preview" class="mt-2"></div>
 				</label>
 				<label class="flex items-center gap-2">
-					<input type="checkbox" name="sold" value="true" class="rounded"/>
-					<span class="font-medium">Sold</span>
+					<input type="checkbox" name="show_in_store" value="true" class="rounded"/>
+					<span class="font-medium">Show in store</span>
 				</label>
 				<input type="hidden" name="created_at" value={ time.Now().Format(time.RFC3339) }/>
 				<div class="flex justify-end gap-2 mt-4">

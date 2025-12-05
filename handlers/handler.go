@@ -19,6 +19,7 @@ type Handler struct {
 	DB            *db.DB
 	Routes        []partial.Route
 	ImageUploader *services.ImageUploader
+	CartService   *services.CartService
 }
 
 func (h *Handler) getRoutesWithReferences(routes []partial.Route) []partial.Route {
@@ -40,20 +41,13 @@ func (h *Handler) getRoutesWithReferences(routes []partial.Route) []partial.Rout
 	return _routes
 }
 
-func NewHandler(database *db.DB, routes []partial.Route, imageUploader *services.ImageUploader) *Handler {
+func NewHandler(database *db.DB, routes []partial.Route, imageUploader *services.ImageUploader, cartService *services.CartService) *Handler {
 	return &Handler{
 		DB:            database,
 		Routes:        routes,
 		ImageUploader: imageUploader,
+		CartService:   cartService,
 	}
-}
-
-func (h *Handler) RegisterModalRoutes(r chi.Router) {
-	r.Get("/modal/close", h.closeModal)
-}
-
-func (h *Handler) RegisterHomeRoutes(r chi.Router) {
-	r.Get("/", h.home)
 }
 
 func (h *Handler) isHTMX(r *http.Request) bool {
@@ -68,11 +62,17 @@ func (h *Handler) render(w http.ResponseWriter, r *http.Request, content templ.C
 
 	var component templ.Component
 
+	cartItems, err := h.CartService.GetCart(r)
+	if err != nil {
+		log.Println("Failed to get cart items:", err)
+		cartItems = []services.CartItem{}
+	}
+
 	if h.isHTMX(r) {
-		component = layout.Content(h.getRoutesWithReferences(h.Routes), h.DB, r.URL.Path, content)
+		component = layout.Content(h.getRoutesWithReferences(h.Routes), cartItems, h.DB, r.URL.Path, content)
 	} else {
 		// Regular request - return full page with sidebar showing current path
-		component = layout.Base(h.getRoutesWithReferences(h.Routes), h.DB, r.URL.Path, content)
+		component = layout.Base(h.getRoutesWithReferences(h.Routes), cartItems, h.DB, r.URL.Path, content)
 	}
 
 	if r.URL.Path == "/" {
@@ -84,12 +84,19 @@ func (h *Handler) render(w http.ResponseWriter, r *http.Request, content templ.C
 	templ.Handler(component).ServeHTTP(w, r)
 }
 
-// handleError logs the error and sends an HTTP error response
 func (h *Handler) handleError(w http.ResponseWriter, message string, statusCode int, err error) {
 	if err != nil {
 		log.Printf("%s: %v", message, err)
 	}
 	http.Error(w, message, statusCode)
+}
+
+func (h *Handler) RegisterModalRoutes(r chi.Router) {
+	r.Get("/modal/close", h.closeModal)
+}
+
+func (h *Handler) RegisterHomeRoutes(r chi.Router) {
+	r.Get("/", h.home)
 }
 
 func (h *Handler) home(w http.ResponseWriter, r *http.Request) {

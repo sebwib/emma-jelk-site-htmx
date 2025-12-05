@@ -1,0 +1,42 @@
+package partial
+
+import (
+	"github.com/sebwib/emma-site-htmx/components/id"
+	"github.com/sebwib/emma-site-htmx/services"
+	"strconv"
+)
+
+templ CartSymbol(cartItems []services.CartItem, isOOB bool, mode id.CartSymbolMode) {
+	<div
+		id={ id.CartSymbolID(mode) }
+    hx-swap="outerHTML"
+		if (isOOB) {
+			hx-swap-oob="true"
+		}
+	>
+		if len(cartItems) > 0 {
+			if mode == id.CartSymbolModeCount {
+				<p class="absolute items-center justify-center flex -top-1 -right-1 bg-red-600 text-white rounded-full h-4 w-4 text-xs">{ strconv.Itoa(len(cartItems)) }</p>
+			} else {
+				<a
+					hx-get="/cart"
+					hx-target={ id.Selector(id.ContentID) }
+					hx-push-url="true"
+					hx-swap="innerHTML"
+					href="/cart"
+					class="relative block -mx-2 -my-2 top-[1px] p-1 rounded cursor-pointer hover:text-gray-400 transition-colors"
+				>
+					if mode == id.CartSymbolModeMobile {
+						<div class="flex gap-2 items-center">
+							<span>Kundvagn</span>
+							<p class="flex bg-red-600 items-center justify-center text-white rounded-full h-7 w-7 text-lg">{ strconv.Itoa(len(cartItems)) }</p>
+						</div>
+					} else if mode == id.CartSymbolModeDesktop {
+						<img src="/static/img/shopping_cart.svg" alt="Cart" class="inline hover:opacity-75 h-7 w-7"/>
+						<p class="absolute items-center justify-center flex top-0 right-0 bg-red-600 text-white rounded-full h-4 w-4 text-xs">{ strconv.Itoa(len(cartItems)) }</p>
+					}
+				</a>
+			}
+		}
+	</div>
+}

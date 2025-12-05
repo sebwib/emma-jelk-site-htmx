@@ -12,9 +12,10 @@ import (
 	"github.com/sebwib/emma-site-htmx/components/id"
 	"github.com/sebwib/emma-site-htmx/components/partial"
 	"github.com/sebwib/emma-site-htmx/db"
+	"github.com/sebwib/emma-site-htmx/services"
 )
 
-func Base(routes []partial.Route, db *db.DB, currentPath string, children ...templ.Component) templ.Component {
+func Base(routes []partial.Route, cartItems []services.CartItem, db *db.DB, currentPath string, children ...templ.Component) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -41,7 +42,7 @@ func Base(routes []partial.Route, db *db.DB, currentPath string, children ...tem
 		}
 		templ_7745c5c3_Var2, templ_7745c5c3_Err := templruntime.ScriptContentInsideStringLiteral(id.Selector(id.ModalContainerID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 38, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 39, Col: 52}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var2)
 		if templ_7745c5c3_Err != nil {
@@ -62,7 +63,7 @@ func Base(routes []partial.Route, db *db.DB, currentPath string, children ...tem
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(id.ContentID)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 47, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 48, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -72,7 +73,7 @@ func Base(routes []partial.Route, db *db.DB, currentPath string, children ...tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Content(routes, db, currentPath, children...).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Content(routes, cartItems, db, currentPath, children...).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -83,7 +84,7 @@ func Base(routes []partial.Route, db *db.DB, currentPath string, children ...tem
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(id.ModalContainerID)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 50, Col: 32}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/layout/base.templ`, Line: 51, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {

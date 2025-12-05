@@ -4,9 +4,10 @@ import (
 	"github.com/sebwib/emma-site-htmx/components/id"
 	"github.com/sebwib/emma-site-htmx/components/partial"
 	"github.com/sebwib/emma-site-htmx/db"
+	"github.com/sebwib/emma-site-htmx/services"
 )
 
-templ Base(routes []partial.Route, db *db.DB, currentPath string, children ...templ.Component) {
+templ Base(routes []partial.Route, cartItems []services.CartItem, db *db.DB, currentPath string, children ...templ.Component) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -45,7 +46,7 @@ templ Base(routes []partial.Route, db *db.DB, currentPath string, children ...te
 		<body class="bg-dark min-h-screen flex flex-col transition-all duration-100 ease-out relative">
 			@Background(currentPath, false)
 			<div id={ id.ContentID } class="z-[1] flex-1 flex flex-col">
-				@Content(routes, db, currentPath, children...)
+				@Content(routes, cartItems, db, currentPath, children...)
 			</div>
 			<div id={ id.ModalContainerID }></div>
 		</body>

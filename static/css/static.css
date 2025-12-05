@@ -86,3 +86,27 @@ th {
 .grid img {
 
 }
+
+.invalid-feedback {
+  position: relative;
+}
+
+.invalid-feedback::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.invalid-feedback:hover::after {
+  opacity: 1;
+}

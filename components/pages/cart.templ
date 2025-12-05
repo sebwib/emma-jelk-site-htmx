@@ -1,0 +1,125 @@
+package pages
+
+import (
+	"strconv"
+	"github.com/sebwib/emma-site-htmx/components/id"
+	"fmt"
+)
+
+type CartItemView struct {
+	ID       string
+	Typ      string
+	Title 	string
+	Quantity int
+	ThumbURL string
+}
+
+templ Cart(cartItems []CartItemView, isOOB bool) {
+	<div 
+		id={ id.CartPage }
+		class="flex flex-col gap-6 mx-auto w-full md:max-w-3xl max-w-[88%] mb-12"
+		hx-target="outerHTML"
+		if (isOOB) {
+			hx-swap-oob="true"
+		}
+	>
+		<h2 class="text-2xl mt-6 mb-4">Din kundvagn</h2>
+		if len(cartItems) == 0 {
+			<p>Din kundvagn är tom.</p>
+		} else {
+			for _, item := range cartItems {
+				@CartItemSingle(item)
+			}
+			<hr class="my-6"/>
+			<p>
+				Ange din e-post-adress nedan för att slutföra beställningen. Du kommer att få en bekräftelse via e-post med information om betalning och leverans.
+			</p>
+			<div class="flex gap-4 w-full">
+				<input 
+					id={ id.CartEmailInput }
+					class="flex-1 border-gray-300 border rounded px-3"
+					type="text" 
+					placeholder="Ange din e-post-adress" 
+					required
+				>
+				<form
+					hx-post="/cart/checkout"
+				>
+					<button
+						id={ id.CartSubmitButton }
+						type="submit"
+						class="px-5 py-2 bg-[#34495e] disabled:opacity-30 text-white hover:bg-[#2c3e50] transition-colors"
+					>
+						Beställ
+					</button>
+				</form>
+			</div>
+			<script>
+			 	(function() {
+					const emailInput = document.getElementById("{{ id.CartEmailInput }}");
+					const submitButton = document.getElementById("{{ id.CartSubmitButton }}");
+					function validateEmail() {
+						const email = emailInput.value;
+						const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+						submitButton.disabled = !isValid;
+
+						if (!isValid) {
+							submitButton.classList.add('invalid-feedback');
+							submitButton.dataset.tooltip = "Ange en giltig e-postadress";	
+						} else {
+							submitButton.classList.remove('invalid-feedback');
+							submitButton.dataset.tooltip = "";
+						}
+					}
+					emailInput.addEventListener('input', validateEmail);
+					validateEmail(); // Initial validation
+				}());
+			</script>
+		}
+	</div>
+}
+
+templ CartItemSingle(item CartItemView) {
+	<div id={ id.CartItemID(item.ID) } class="w-full flex-col sm:flex-row flex gap-6">
+		<div class="self-center">
+			<img src={ item.ThumbURL } alt="Print" class="h-[150px] w-[150px] min-h-[150px] min-w-[150px] object-cover"/>
+		</div>
+		<div class="my-2 flex flex-col gap-2 flex-1">
+			<h3 class="text-2xl">{ item.Title }</h3>
+			<p class="text-md">Frakt och pakettering ingår</p>
+			<div class="flex-1 items-end w-full justify-between flex">
+				<form
+					hx-put={ fmt.Sprintf("/cart/%s/quantity", item.ID) }
+					hx-target={ id.Selector(id.CartItemID(item.ID)) }
+					hx-swap="outerHTML"
+					class="flex items-center gap-4"
+				>
+					<label for={ "quantity-" + item.ID } class="text-md">Antal:</label>
+					<input
+						class="px-2 py-1 border border-gray-300 rounded w-16"
+						type="number"
+						id={ "quantity-" + item.ID }
+						name="quantity"
+						min="1"	
+						value={ strconv.Itoa(item.Quantity) }
+					/>
+				</form>
+				<form
+					hx-post="/cart/remove"
+					hx-target={ id.Selector(id.CartItemID(item.ID)) }
+					hx-swap="outerHTML"
+					class="flex items-center gap-4"
+				>
+					<input type="hidden" name="print_id" value={ item.ID }/>
+					<input type="hidden" name="type" value={ item.Typ }/>
+					<button
+						type="submit"
+						class="px-5 py-2 bg-[#e74c3c] text-white hover:bg-[#c0392b] transition-colors"
+					>
+						Ta bort
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+}

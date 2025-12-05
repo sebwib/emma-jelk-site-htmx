@@ -58,6 +58,16 @@ func (db *DB) ensureDefaultStoredTexts() error {
 			CreatedAt:   time.Now().Format("2006-01-02 15:04:05"),
 		},
 		{
+			ReferenceID: "prints_title",
+			Content:     "Köp art prints",
+			CreatedAt:   time.Now().Format("2006-01-02 15:04:05"),
+		},
+		{
+			ReferenceID: "prints_text",
+			Content:     "Här kan du köpa art prints av mina originalmålningar. Varje print är tryckt på högkvalitativt papper och är en perfekt present till dig själv eller någon du tycker om.",
+			CreatedAt:   time.Now().Format("2006-01-02 15:04:05"),
+		},
+		{
 			ReferenceID: "about_me_text",
 			Content: `Under min uppväxt tecknade jag dagligen, och intresset var ett brinnande sådant. Efter barndomen gick intresset för tecknandet i vågor tills jag tillslut fick upp ögonen för tatuering, och därmed hamnade jag som lärling på en lokal tatueringsstudio. Tatuerandet var enormt utvecklande då det ingick i min dagliga arbetsrutin att vara kreativ, uppleva kundkontakt samt arbeta disciplinerat och väldigt noggrant under alla moment.
 Det är inte omöjligt att det var den disciplinen som fick mig att så småningom börja måla realism, då det kräver en stor noggrannhet och koncentration för att uppnå det resultat jag vill ha.

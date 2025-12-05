@@ -35,136 +35,123 @@ func EditArtModal(art *db.Art) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div hx-get=\"/modal/close\" hx-target=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"fixed z-[10] top-0 left-0 w-full h-full gap-4 flex flex-col items-center justify-center bg-black bg-opacity-95 p-4 animate-fadeIn\"><div id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(id.EditArtModalInner)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 10, Col: 72}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 11, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"fixed z-[10] top-0 left-0 w-full h-full gap-4 flex flex-col items-center justify-center bg-black bg-opacity-95 p-4 animate-fadeIn\"><div id=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"bg-white rounded-lg p-6 w-full max-w-md\"><h2 class=\"text-2xl mb-4\">Edit Art</h2><form hx-patch=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(id.EditArtModalInner)
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("/edit/art/" + art.Id + "?replace=true")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 11, Col: 32}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 14, Col: 54}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"bg-white rounded-lg p-6 w-full max-w-md\"><h2 class=\"text-2xl mb-4\">Edit Art</h2><form hx-patch=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" hx-target=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("/edit/art/" + art.Id + "?replace=true")
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ContentID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 14, Col: 54}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 15, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" hx-target=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" hx-swap=\"innerHTML\" class=\"flex flex-col gap-4\"><label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Title</span> <input type=\"text\" name=\"title\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ContentID))
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(art.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 15, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 21, Col: 54}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" hx-swap=\"innerHTML\" class=\"flex flex-col gap-4\"><label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Title</span> <input type=\"text\" name=\"title\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Width</span> <input type=\"number\" name=\"width\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(art.Title)
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(art.Width))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 21, Col: 54}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 25, Col: 70}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Width</span> <input type=\"number\" name=\"width\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Height</span> <input type=\"number\" name=\"height\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(art.Width))
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(art.Height))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 25, Col: 70}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 29, Col: 72}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Height</span> <input type=\"number\" name=\"height\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Medium</span> <input type=\"text\" name=\"medium\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
-		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(art.Height))
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(art.Medium)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 29, Col: 72}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 33, Col: 56}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" class=\"border p-2 rounded\"></label> <label class=\"flex flex-col\"><span class=\"mb-1 font-medium\">Medium</span> <input type=\"text\" name=\"medium\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" class=\"border p-2 rounded\"></label><div class=\"flex justify-end gap-2 mt-4\"><button type=\"button\" hx-get=\"/modal/close\" hx-target=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(art.Medium)
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 33, Col: 56}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 39, Col: 50}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" class=\"border p-2 rounded\"></label><div class=\"flex justify-end gap-2 mt-4\"><button type=\"button\" hx-get=\"/modal/close\" hx-target=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" class=\"px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition-colors\">Cancel</button> <button type=\"submit\" class=\"px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors\">Save</button></div></form></div><script>\n      (function(){\n        const modalInner = document.getElementById(\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var10 string
-		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(id.Selector(id.ModalContainerID))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 39, Col: 50}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\" class=\"px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition-colors\">Cancel</button> <button type=\"submit\" class=\"px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors\">Save</button></div></form></div><script>\n      (function(){\n        const modalInner = document.getElementById(\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Var11, templ_7745c5c3_Err := templruntime.ScriptContentInsideStringLiteral(id.EditArtModalInner)
+		templ_7745c5c3_Var10, templ_7745c5c3_Err := templruntime.ScriptContentInsideStringLiteral(id.EditArtModalInner)
 		if templ_7745c5c3_Err != nil {
 			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/edit-art-modal.templ`, Line: 55, Col: 75}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var11)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var10)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\");\n        modalInner.addEventListener(\"click\", function(event) {\n          event.stopPropagation();\n        });\n      }())\n    </script></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "\");\n        modalInner.addEventListener(\"click\", function(event) {\n          event.stopPropagation();\n        });\n      }())\n    </script></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

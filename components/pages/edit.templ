@@ -80,7 +80,75 @@ templ ArtRow(art db.Art, i int) {
 	</tr>
 }
 
-templ Edit(arts []db.Art, references []db.StoredText) {
+templ PrintRow(print db.Print, i int) {
+	{{ encodedID := "ID-" + print.Id }}
+	<tr
+		draggable="true"
+		data-id={ print.Id }
+		data-ordering={ fmt.Sprintf("%.6f", print.Ordering) }
+		data-index={ strconv.Itoa(i) }
+		class="border-b hover:bg-gray-100 cursor-move"
+	>
+		<td class="p-2">⋮⋮</td>
+		<td class="p-2">
+			{ print.Title }
+		</td>
+		<td class="p-2">
+			{ strconv.Itoa(print.Width) }
+		</td>
+		<td class="p-2">
+			{ strconv.Itoa(print.Height) }
+		</td>
+		<td class="p-2">
+			<a target="_blank" href={ templ.URL(getImgUrl(print.ImgURL)) } class="text-blue-600 hover:underline">
+				{ print.ImgURL }
+			</a>
+		</td>
+		<td class="p-2">
+			{ fmt.Sprintf("%.2f", print.Price) }
+		</td>
+		<td class="p-2">
+			{ strconv.Itoa(print.QuantityLeft) }
+		</td>
+		<td class="ordering p-2 text-sm text-gray-500">
+			{ fmt.Sprintf("%.6f", print.Ordering) }
+		</td>
+		<td class="p-2">
+			<form
+				hx-patch={ "/edit/print/" + print.Id + "/show_in_store" }
+				hx-target="closest tr"
+				hx-swap="outerHTML"
+				hx-push-url="false"
+				hx-trigger={ "change from:" + id.Selector(encodedID+"show") }
+			>
+				<input id={ encodedID + "show" } onpointerdown="event.stopPropagation(); event.stopImmediatePropagation()" draggable="false" name="show_in_store" type="checkbox" { boolToCheckedString(print.ShowInStore) }/>
+			</form>
+		</td>
+		<td>
+			<div class="flex gap-2">
+				<button
+					class="rounded bg-blue-500 text-white px-3 py-1 hover:bg-blue-600 transition-colors"
+					hx-get={ "/edit/print/modal/" + print.Id }
+					hx-target={ id.Selector(id.ModalContainerID) }
+					hx-swap="innerHTML"
+				>
+					Edit
+				</button>
+				<button
+					class="rounded bg-red-500 text-white px-3 py-1 hover:bg-red-600 transition-colors"
+					hx-delete={ "/edit/print/" + print.Id }
+					hx-target="closest tr"
+					hx-swap="outerHTML"
+					hx-confirm="Are you sure you want to delete this print?"
+				>
+					Delete
+				</button>
+			</div>
+		</td>
+	</tr>
+}
+
+templ Edit(arts []db.Art, prints []db.Print, references []db.StoredText) {
 	<div class="flex flex-col p-6 gap-6 z-[4]">
 		<h2 class="text-2xl">Static content</h2>
 		<div class="flex gap-2 flex-wrap">
@@ -126,113 +194,150 @@ templ Edit(arts []db.Art, references []db.StoredText) {
 				}
 			</tbody>
 		</table>
+		<div class="flex justify-between items-center">
+			<h2 class="text-2xl">Prints</h2>
+			<button
+				hx-get="/edit/print/modal/new"
+				hx-target={ id.Selector(id.ModalContainerID) }
+				hx-swap="innerHTML"
+				class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+			>
+				+ Add New Print
+			</button>
+		</div>
+		<table id="art-table" class="border-collapse">
+			<thead>
+				<tr>
+					<th class="p-2 text-left">Drag</th>
+					<th class="p-2 text-left">Title</th>
+					<th class="p-2 text-left">Width</th>
+					<th class="p-2 text-left">Height</th>
+					<th class="p-2 text-left">Image URL</th>
+					<th class="p-2 text-left">Price</th>
+					<th class="p-2 text-left">Quantity left</th>
+					<th class="p-2 text-left">Ordering</th>
+					<th class="p-2 text-left">Show?</th>
+					<th class="p-2 text-left"></th>
+				</tr>
+			</thead>
+			<tbody id="print-tbody">
+				for i, print := range prints {
+					@PrintRow(print, i)
+				}
+			</tbody>
+		</table>
 	</div>
 	<script>
 		(function() {
-			const tbody = document.getElementById('art-tbody');
-			let draggedElement = null;
+			const enableDragging = (id, type) => {
+				const tbody = document.getElementById(id);
+				let draggedElement = null;
 
-			tbody.addEventListener('dragstart', function(e) {
-				if (e.target.tagName === 'TR') {
-					draggedElement = e.target;
-					e.target.style.opacity = '0.4';
-				}
-			});
-
-			tbody.addEventListener('dragend', function(e) {
-				if (e.target.tagName === 'TR') {
-					e.target.style.opacity = '1';
-				}
-			});
-
-			tbody.addEventListener('dragover', function(e) {
-				e.preventDefault();
-				const afterElement = getDragAfterElement(tbody, e.clientY);
-				if (afterElement == null) {
-					tbody.appendChild(draggedElement);
-				} else {
-					tbody.insertBefore(draggedElement, afterElement);
-				}
-			});
-
-			tbody.addEventListener('drop', function(e) {
-				e.preventDefault();
-				if (!draggedElement) return;
-
-				const draggedId = draggedElement.dataset.id;
-				const rows = Array.from(tbody.querySelectorAll('tr'));
-				const draggedIndex = rows.indexOf(draggedElement);
-
-				// Calculate new ordering
-				let newOrdering;
-				const prevRow = rows[draggedIndex - 1];
-				const nextRow = rows[draggedIndex + 1];
-
-				if (!prevRow && !nextRow) {
-					// Only one row
-					newOrdering = 1.0;
-				} else if (!prevRow) {
-					// First position
-					const nextOrdering = parseFloat(nextRow.dataset.ordering);
-					newOrdering = nextOrdering + 1.0;
-				} else if (!nextRow) {
-					// Last position
-					const prevOrdering = parseFloat(prevRow.dataset.ordering);
-					newOrdering = prevOrdering - 1.0;
-				} else {
-					// Between two rows
-					const prevOrdering = parseFloat(prevRow.dataset.ordering);
-					const nextOrdering = parseFloat(nextRow.dataset.ordering);
-					newOrdering = (prevOrdering + nextOrdering) / 2.0;
-				}
-
-				// Update the data attribute
-				draggedElement.dataset.ordering = newOrdering.toFixed(6);
-
-				const draggedMemory = draggedElement
-
-				// Send PATCH request
-				fetch(`/edit/art/${draggedId}`, {
-					method: 'PATCH',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						ordering: newOrdering
-					})
-				})
-				.then(response => {
-					if (!response.ok) {
-						console.error('Failed to update ordering');
-					} else {
-						// Update the displayed ordering value
-						const orderingCell = draggedMemory?.querySelector('.ordering');
-						if (orderingCell) {
-							orderingCell.textContent = newOrdering.toFixed(6);
-						}
+				tbody.addEventListener('dragstart', function(e) {
+					if (e.target.tagName === 'TR') {
+						draggedElement = e.target;
+						e.target.style.opacity = '0.4';
 					}
-				})
-				.catch(error => {
-					console.error('Error updating ordering:', error);
 				});
 
-				draggedElement = null;
-			});
-
-			function getDragAfterElement(container, y) {
-				const draggableElements = [...container.querySelectorAll('tr:not(.dragging)')];
-
-				return draggableElements.reduce((closest, child) => {
-					const box = child.getBoundingClientRect();
-					const offset = y - box.top - box.height / 2;
-
-					if (offset < 0 && offset > closest.offset) {
-						return { offset: offset, element: child };
-					} else {
-						return closest;
+				tbody.addEventListener('dragend', function(e) {
+					if (e.target.tagName === 'TR') {
+						e.target.style.opacity = '1';
 					}
-				}, { offset: Number.NEGATIVE_INFINITY }).element;
+				});
+
+				tbody.addEventListener('dragover', function(e) {
+					e.preventDefault();
+					const afterElement = getDragAfterElement(tbody, e.clientY);
+					if (afterElement == null) {
+						tbody.appendChild(draggedElement);
+					} else {
+						tbody.insertBefore(draggedElement, afterElement);
+					}
+				});
+
+				tbody.addEventListener('drop', function(e) {
+					e.preventDefault();
+					if (!draggedElement) return;
+
+					const draggedId = draggedElement.dataset.id;
+					const rows = Array.from(tbody.querySelectorAll('tr'));
+					const draggedIndex = rows.indexOf(draggedElement);
+
+					// Calculate new ordering
+					let newOrdering;
+					const prevRow = rows[draggedIndex - 1];
+					const nextRow = rows[draggedIndex + 1];
+
+					if (!prevRow && !nextRow) {
+						// Only one row
+						newOrdering = 1.0;
+					} else if (!prevRow) {
+						// First position
+						const nextOrdering = parseFloat(nextRow.dataset.ordering);
+						newOrdering = nextOrdering + 1.0;
+					} else if (!nextRow) {
+						// Last position
+						const prevOrdering = parseFloat(prevRow.dataset.ordering);
+						newOrdering = prevOrdering - 1.0;
+					} else {
+						// Between two rows
+						const prevOrdering = parseFloat(prevRow.dataset.ordering);
+						const nextOrdering = parseFloat(nextRow.dataset.ordering);
+						newOrdering = (prevOrdering + nextOrdering) / 2.0;
+					}
+
+					// Update the data attribute
+					draggedElement.dataset.ordering = newOrdering.toFixed(6);
+
+					const draggedMemory = draggedElement
+
+					// Send PATCH request
+					fetch(`/edit/${type}/${draggedId}`, {
+						method: 'PATCH',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							ordering: newOrdering
+						})
+					})
+					.then(response => {
+						if (!response.ok) {
+							console.error('Failed to update ordering');
+						} else {
+							// Update the displayed ordering value
+							const orderingCell = draggedMemory?.querySelector('.ordering');
+							if (orderingCell) {
+								orderingCell.textContent = newOrdering.toFixed(6);
+							}
+						}
+					})
+					.catch(error => {
+						console.error('Error updating ordering:', error);
+					});
+
+					draggedElement = null;
+				});
+
+				function getDragAfterElement(container, y) {
+					const draggableElements = [...container.querySelectorAll('tr:not(.dragging)')];
+
+					return draggableElements.reduce((closest, child) => {
+						const box = child.getBoundingClientRect();
+						const offset = y - box.top - box.height / 2;
+
+						if (offset < 0 && offset > closest.offset) {
+							return { offset: offset, element: child };
+						} else {
+							return closest;
+						}
+					}, { offset: Number.NEGATIVE_INFINITY }).element;
+				}
 			}
+
+			enableDragging('art-tbody', 'art');
+			enableDragging('print-tbody', 'print');
 		})();
 	</script>
 }

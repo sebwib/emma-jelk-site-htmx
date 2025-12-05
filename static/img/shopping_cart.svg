@@ -1,0 +1,70 @@
+<svg
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Handle -->
+  <path
+    d="M4 5H6"
+    stroke="currentColor"
+    stroke-width="1.4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Main cart outline -->
+  <path
+    d="M6 5L7.3 15C7.4 15.7 8 16.3 8.8 16.3H17.4C18.2 16.3 18.8 15.8 19 15.1L20.8 9"
+    stroke="currentColor"
+    stroke-width="1.4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Basket top (joins cleanly with main frame) -->
+  <path
+    d="M7.3 9H20.8"
+    stroke="currentColor"
+    stroke-width="1.4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Inner basket supports — aligned exactly to hit top + bottom lines -->
+  <path
+    d="M10 9.2L10.5 14.2"
+    stroke="currentColor"
+    stroke-width="1.4"
+    stroke-linecap="round"
+  />
+  <path
+    d="M13 9.2L13.3 14.2"
+    stroke="currentColor"
+    stroke-width="1.4"
+    stroke-linecap="round"
+  />
+  <path
+    d="M16 9.2L16.2 14.2"
+    stroke="currentColor"
+    stroke-width="1.4"
+    stroke-linecap="round"
+  />
+
+  <!-- Wheels -->
+  <circle
+    cx="9"
+    cy="19"
+    r="1.5"
+    stroke="currentColor"
+    stroke-width="1.4"
+  />
+  <circle
+    cx="17"
+    cy="19"
+    r="1.5"
+    stroke="currentColor"
+    stroke-width="1.4"
+  />
+</svg>

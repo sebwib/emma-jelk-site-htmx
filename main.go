@@ -19,6 +19,7 @@ var routes = []partial.Route{
 	{Path: "/", Name: "ref:home_title", InSidebar: false},
 	{Path: "/gallery", Name: "ref:gallery_title", InSidebar: true},
 	{Path: "/buyart", Name: "ref:buy_art_title", InSidebar: true},
+	{Path: "/prints", Name: "ref:prints_title", InSidebar: true},
 	{Path: "/about", Name: "ref:about_me_title", InSidebar: true},
 }
 
@@ -44,10 +45,11 @@ func main() {
 		log.Fatalf("Failed to initialize image uploader: %v", err)
 	}
 
+	cartService := &services.CartService{}
 	// Initialize session store
 	sessionStore := authmw.NewSessionStore()
 
-	h := handlers.NewHandler(db, routes, imageUploader)
+	h := handlers.NewHandler(db, routes, imageUploader, cartService)
 	registerMiddlewares(r)
 	registerRoutes(h, r, sessionStore)
 
@@ -65,6 +67,8 @@ func registerRoutes(h *handlers.Handler, r chi.Router, sessionStore *authmw.Sess
 	h.RegisterBuyArtRoutes(r)
 	h.RegisterAboutRoutes(r)
 	h.RegisterAPIRoutes(r)
+	h.RegisterArtPrintRoutes(r)
+	h.RegisterCartRoutes(r)
 	h.RegisterAuthRoutes(r, sessionStore)
 	h.RegisterEditRoutes(r, sessionStore)
 }

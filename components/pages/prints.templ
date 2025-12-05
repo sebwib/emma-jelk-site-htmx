@@ -1,0 +1,63 @@
+package pages
+
+import "github.com/sebwib/emma-site-htmx/db"
+import "strconv"
+
+templ Prints(printTitle, printText string, prints []db.Print) {
+	<div class="flex flex-col gap-3 mx-auto md:max-w-3xl max-w-[88%] mb-12">
+		<div class="text-center whitespace-pre-line mt-6 leading-none">
+			{ printText }
+		</div>
+		for i, print := range prints {
+			@PrintSingle(print, i == 0)
+		}
+	</div>
+}
+
+templ PrintSingle(print db.Print, isFirst bool) {
+	<hr class="my-6"/>
+	<div class="w-full flex flex-col sm:flex-row gap-6">
+		<div class="self-center md:self-start">
+			<img src={ print.ImgURL } alt={ print.Title } class="h-[250px] w-[250px] min-h-[250px] min-w-[250px] object-cover"/>
+		</div>
+		<div class="my-2 flex flex-col gap-2 flex-1">
+			<h3 class="text-2xl">{ print.Title }</h3>
+			<h4 class="text-lg">{ print.Medium } - { strconv.Itoa(print.Width) } x { strconv.Itoa(print.Height) } cm</h4>
+			<p class="text-md">{ print.Description }</p>
+			<div class="flex gap-4 flex-1 items-end w-full justify-between">
+				<p class="text-lg">{ print.Price } kr inklusive frakt</p>
+				<form
+					hx-post="/cart/add"
+					class="flex items-center gap-4"
+				>
+					<input type="hidden" name="print_id" value={ print.Id }/>
+					if print.QuantityLeft == 0 {
+						<button
+							disabled
+							class="px-5 py-2 bg-[#f39c12] text-white"
+						>
+							Slutsålt!
+						</button>
+					} else {
+
+						<button
+							type="submit"
+							class="px-5 py-2 bg-[#34495e] text-white hover:bg-[#2c3e50] transition-colors"
+						>
+							Köp
+						</button>
+					}
+				</form>
+			</div>
+		</div>
+	</div>
+}
+
+templ BoughtButton() {
+	<button
+		disabled
+		class="px-5 py-2 bg-[#27ae60] text-white"
+	>
+		Tack!
+	</button>
+}
