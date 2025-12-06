@@ -52,6 +52,9 @@ func (db *DB) createTables() error {
 	if err := db.createPrintTable(); err != nil {
 		return err
 	}
+	if err := db.createOrdersTable(); err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -1,11 +1,12 @@
 package pages
 
-templ Login() {
+templ Login(redirectTo string) {
 	<div class="min-h-screen flex items-center justify-center">
 		<div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
 			<h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 			<form hx-post="/login" hx-target="#login-form" hx-swap="outerHTML">
 				<div id="login-form">
+					<input type="hidden" name="redirect_to" value={ redirectTo }/>
 					<div class="mb-4">
 						<label for="username" class="block text-gray-700 text-sm font-bold mb-2">
 							Username

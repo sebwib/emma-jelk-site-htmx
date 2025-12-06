@@ -1,0 +1,125 @@
+package pages
+
+import (
+	"github.com/sebwib/emma-site-htmx/components/id"
+	"github.com/sebwib/emma-site-htmx/db"
+	"time"
+)
+
+templ Orders(orders []db.Order) {
+	<div class="mx-auto w-full md:max-w-3xl max-w-[88%] mt-4 mb-12">
+		<h2 class="text-2xl mb-4">Beställningar</h2>
+		<div class="flex flex-col">
+			for _, order := range orders {
+				<hr/>
+				@OrderSingle(order)
+			}
+		</div>
+	</div>
+}
+
+templ OrderSingle(order db.Order) {
+	<div id={ id.OrderId(order.OrderID) } class={ "flex gap-4 p-4 justify-between", classFromOrder(order) }>
+		<div>
+			<h3 class="text-lg font-semibold mb-2">{ order.BuyerEmail }</h3>
+			<p class="mb-1">
+				<strong>Order placerad:</strong>
+				{ FormatOrderDate(order.CreatedAt) }
+			</p>
+			<p class="mb-1">
+				<strong>Kontaktad:</strong>
+				{ FormatOrderDate(order.ContactedAt) }
+			</p>
+			<p class="mb-1">
+				<strong>Skickad:</strong>
+				{ FormatOrderDate(order.SentAt) }
+			</p>
+			<p class="mb-1"><strong>Status:</strong> { StatusToString(order.Status) }</p>
+			<p class="mb-1">
+				<strong>Betalt allt:</strong>
+				if order.HasPaidAll {
+					Ja
+				} else {
+					Nej
+				}
+			</p>
+			<p><strong>Totalpris:</strong> { order.TotalPrice } kr</p>
+			<h4 class="font-semibold mt-2 mb-1">Artiklar:</h4>
+			<ul class="list-disc list-inside mb-2">
+				for _, row := range order.Rows {
+					<li class="flex flex-row gap-4 w-full justify-between items-center">
+						<p>
+							{ row.Title } - { row.Typ } - Antal: <strong>{ row.Quantity }</strong> - Pris: <strong>{ row.Price }</strong> kr
+						</p>
+						<form
+							hx-post={ "/orders/" + order.OrderID + "/row/" + row.UUID + "/toggle_paid" }
+							hx-target={ id.Selector(id.OrderId(order.OrderID)) }
+							hx-swap="outerHTML"
+							hx-trigger={ "change from:" + id.Selector("check_"+row.UUID+"_haspaid") }
+						>
+							<input id={ "check_" + row.UUID + "_haspaid" } name="paid" type="checkbox" { boolToCheckedString(row.HasPaid) }/> Betald
+						</form>
+					</li>
+				}
+			</ul>
+		</div>
+		<div class="flex flex-col gap-4 items-end">
+			<form
+				hx-post={ "/orders/" + order.OrderID + "/update_status" }
+				hx-target={ id.Selector(id.OrderId(order.OrderID)) }
+				hx-swap="outerHTML"
+				hx-trigger={ "change from:" + id.Selector("select_"+order.OrderID) }
+			>
+				Status:
+				<select id={ "select_" + order.OrderID } name="order_status" class="border border-gray-400 rounded px-4 py-2">
+					<option value="">- Status - </option>
+					<option value="PLACED" { BoolToSelected(order.Status == db.OrderStatusPlaced) }>1. Placerad</option>
+					<option value="CONTACTED" { BoolToSelected(order.Status == db.OrderStatusContacted) }>2. Kontaktad</option>
+					<option value="SHIPPED" { BoolToSelected(order.Status == db.OrderStatusShipped) }>3. Skickad</option>
+				</select>
+			</form>
+		</div>
+	</div>
+}
+
+func classFromOrder(order db.Order) string {
+	if order.HasPaidAll && order.Status == db.OrderStatusShipped {
+		return "bg-green-100"
+	}
+	return ""
+}
+
+func BoolToSelected(b bool) string {
+	if b {
+		return "selected"
+	}
+	return ""
+}
+
+func StatusToString(status db.OrderStatus) string {
+	switch status {
+	case db.OrderStatusPlaced:
+		return "Placerad"
+	case db.OrderStatusShipped:
+		return "Skickad"
+	case db.OrderStatusContacted:
+		return "Kontaktad"
+	default:
+		return string(status)
+	}
+}
+
+func FormatOrderDate(createdAt interface{}) string {
+	switch v := createdAt.(type) {
+	case time.Time:
+		return v.Local().Format("2006-01-02 kl. 15:04")
+	case string:
+		t, err := time.Parse(time.RFC3339, v)
+		if err != nil {
+			return v // fallback to raw string if parsing fails
+		}
+		return t.Local().Format("2006-01-02 kl. 15:04")
+	default:
+		return ""
+	}
+}

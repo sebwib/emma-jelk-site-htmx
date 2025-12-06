@@ -101,3 +101,7 @@ func CartSymbolID(mode CartSymbolMode) string {
 	}
 	return "cart-symbol"
 }
+
+func OrderId(id string) string {
+	return "order-" + id
+}

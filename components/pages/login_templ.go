@@ -8,7 +8,7 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Login() templ.Component {
+func Login(redirectTo string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,7 +29,20 @@ func Login() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-screen flex items-center justify-center\"><div class=\"bg-white p-8 rounded-lg shadow-md w-full max-w-md\"><h2 class=\"text-2xl font-bold mb-6 text-center\">Login</h2><form hx-post=\"/login\" hx-target=\"#login-form\" hx-swap=\"outerHTML\"><div id=\"login-form\"><div class=\"mb-4\"><label for=\"username\" class=\"block text-gray-700 text-sm font-bold mb-2\">Username</label> <input type=\"text\" id=\"username\" name=\"username\" required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\"></div><div class=\"mb-6\"><label for=\"password\" class=\"block text-gray-700 text-sm font-bold mb-2\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\"></div><div class=\"flex items-center justify-between\"><button type=\"submit\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full\">Sign In</button></div></div></form></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-screen flex items-center justify-center\"><div class=\"bg-white p-8 rounded-lg shadow-md w-full max-w-md\"><h2 class=\"text-2xl font-bold mb-6 text-center\">Login</h2><form hx-post=\"/login\" hx-target=\"#login-form\" hx-swap=\"outerHTML\"><div id=\"login-form\"><input type=\"hidden\" name=\"redirect_to\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 string
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(redirectTo)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/pages/login.templ`, Line: 9, Col: 63}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\"><div class=\"mb-4\"><label for=\"username\" class=\"block text-gray-700 text-sm font-bold mb-2\">Username</label> <input type=\"text\" id=\"username\" name=\"username\" required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\"></div><div class=\"mb-6\"><label for=\"password\" class=\"block text-gray-700 text-sm font-bold mb-2\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\"></div><div class=\"flex items-center justify-between\"><button type=\"submit\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full\">Sign In</button></div></div></form></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -53,12 +66,12 @@ func LoginError() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var2 == nil {
-			templ_7745c5c3_Var2 = templ.NopComponent
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div id=\"login-form\"><div class=\"mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded\">Invalid username or password</div><div class=\"mb-4\"><label for=\"username\" class=\"block text-gray-700 text-sm font-bold mb-2\">Username</label> <input type=\"text\" id=\"username\" name=\"username\" required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\"></div><div class=\"mb-6\"><label for=\"password\" class=\"block text-gray-700 text-sm font-bold mb-2\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\"></div><div class=\"flex items-center justify-between\"><button type=\"submit\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full\">Sign In</button></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div id=\"login-form\"><div class=\"mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded\">Invalid username or password</div><div class=\"mb-4\"><label for=\"username\" class=\"block text-gray-700 text-sm font-bold mb-2\">Username</label> <input type=\"text\" id=\"username\" name=\"username\" required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\"></div><div class=\"mb-6\"><label for=\"password\" class=\"block text-gray-700 text-sm font-bold mb-2\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" required class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\"></div><div class=\"flex items-center justify-between\"><button type=\"submit\" class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full\">Sign In</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

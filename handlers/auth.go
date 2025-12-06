@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"net/url"
 	"os"
 
 	"github.com/go-chi/chi/v5"
@@ -10,13 +11,13 @@ import (
 )
 
 func (h *Handler) RegisterAuthRoutes(r chi.Router, store *middleware.SessionStore) {
-	r.Get("/login", h.showLogin)
+	r.Get("/login", h.loginPage)
 	r.Post("/login", h.login(store))
 	r.Post("/logout", h.logout(store))
 }
 
-func (h *Handler) showLogin(w http.ResponseWriter, r *http.Request) {
-	h.render(w, r, pages.Login(), false)
+func (h *Handler) loginPage(w http.ResponseWriter, r *http.Request) {
+	h.render(w, r, pages.Login(r.URL.Query().Get("redirect_to")), false)
 }
 
 func (h *Handler) login(store *middleware.SessionStore) http.HandlerFunc {
@@ -24,6 +25,12 @@ func (h *Handler) login(store *middleware.SessionStore) http.HandlerFunc {
 		if err := r.ParseForm(); err != nil {
 			http.Error(w, "Bad request", http.StatusBadRequest)
 			return
+		}
+
+		redirectTo := "/edit"
+		redirectToFromParams, err := url.QueryUnescape(r.FormValue("redirect_to"))
+		if redirectToFromParams != "" && err == nil {
+			redirectTo = redirectToFromParams
 		}
 
 		username := r.FormValue("username")
@@ -61,7 +68,7 @@ func (h *Handler) login(store *middleware.SessionStore) http.HandlerFunc {
 			})
 
 			// Redirect to edit page
-			w.Header().Set("HX-Redirect", "/edit")
+			w.Header().Set("HX-Redirect", redirectTo)
 			w.WriteHeader(http.StatusOK)
 			return
 		}

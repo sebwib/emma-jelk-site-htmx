@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"net/http"
+	"net/url"
 	"sync"
 	"time"
 )
@@ -102,14 +103,14 @@ func RequireAuth(store *SessionStore) func(http.Handler) http.Handler {
 			cookie, err := r.Cookie(SessionCookieName)
 			if err != nil {
 				// No session cookie, redirect to login
-				http.Redirect(w, r, "/login", http.StatusSeeOther)
+				http.Redirect(w, r, "/login?redirect_to="+url.QueryEscape(r.URL.RequestURI()), http.StatusSeeOther)
 				return
 			}
 
 			session, valid := store.GetSession(cookie.Value)
 			if !valid {
 				// Invalid or expired session
-				http.Redirect(w, r, "/login", http.StatusSeeOther)
+				http.Redirect(w, r, "/login?redirect_to="+url.QueryEscape(r.URL.RequestURI()), http.StatusSeeOther)
 				return
 			}
 

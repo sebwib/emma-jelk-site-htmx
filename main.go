@@ -32,7 +32,7 @@ func main() {
 	// Initialize handlers with services
 	r := chi.NewRouter()
 
-	log.Println("v0.0.9")
+	log.Println("v0.0.10")
 
 	db, err := db.New("./database.db")
 	if err != nil {
@@ -69,6 +69,7 @@ func registerRoutes(h *handlers.Handler, r chi.Router, sessionStore *authmw.Sess
 	h.RegisterAPIRoutes(r)
 	h.RegisterArtPrintRoutes(r)
 	h.RegisterCartRoutes(r)
+	h.RegisterOrderRoutes(r, sessionStore)
 	h.RegisterAuthRoutes(r, sessionStore)
 	h.RegisterEditRoutes(r, sessionStore)
 }

@@ -1,21 +1,21 @@
 package pages
 
 import (
-	"strconv"
-	"github.com/sebwib/emma-site-htmx/components/id"
 	"fmt"
+	"github.com/sebwib/emma-site-htmx/components/id"
+	"strconv"
 )
 
 type CartItemView struct {
 	ID       string
 	Typ      string
-	Title 	string
+	Title    string
 	Quantity int
 	ThumbURL string
 }
 
 templ Cart(cartItems []CartItemView, isOOB bool) {
-	<div 
+	<div
 		id={ id.CartPage }
 		class="flex flex-col gap-6 mx-auto w-full md:max-w-3xl max-w-[88%] mb-12"
 		hx-target="outerHTML"
@@ -34,17 +34,21 @@ templ Cart(cartItems []CartItemView, isOOB bool) {
 			<p>
 				Ange din e-post-adress nedan för att slutföra beställningen. Du kommer att få en bekräftelse via e-post med information om betalning och leverans.
 			</p>
-			<div class="flex gap-4 w-full">
-				<input 
-					id={ id.CartEmailInput }
-					class="flex-1 border-gray-300 border rounded px-3"
-					type="text" 
-					placeholder="Ange din e-post-adress" 
-					required
-				>
-				<form
-					hx-post="/cart/checkout"
-				>
+			<form
+				hx-post="/cart/checkout"
+				hx-target={ id.Selector(id.ContentID) }
+				hx-swap="outerHTML"
+				class="mt-4 w-full"
+			>
+				<div class="flex gap-4 w-full">
+					<input
+						id={ id.CartEmailInput }
+						name="email"
+						class="flex-1 border-gray-300 border rounded px-3"
+						type="text"
+						placeholder="Ange din e-post-adress"
+						required
+					/>
 					<button
 						id={ id.CartSubmitButton }
 						type="submit"
@@ -52,8 +56,8 @@ templ Cart(cartItems []CartItemView, isOOB bool) {
 					>
 						Beställ
 					</button>
-				</form>
-			</div>
+				</div>
+			</form>
 			<script>
 			 	(function() {
 					const emailInput = document.getElementById("{{ id.CartEmailInput }}");
@@ -100,7 +104,7 @@ templ CartItemSingle(item CartItemView) {
 						type="number"
 						id={ "quantity-" + item.ID }
 						name="quantity"
-						min="1"	
+						min="1"
 						value={ strconv.Itoa(item.Quantity) }
 					/>
 				</form>
